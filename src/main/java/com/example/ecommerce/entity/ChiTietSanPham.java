@@ -1,11 +1,17 @@
 package com.example.ecommerce.entity;
 
+import com.example.ecommerce.infrastructures.constants.TypeStatus;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +21,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Nationalized;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @author caodinh
@@ -49,6 +56,12 @@ public class ChiTietSanPham {
     @JoinColumn(name = "id_mausac")
     private MauSac mauSac;
 
+    @ManyToOne
+    @JoinColumn(name = "id_season")
+    private Season season;
+
+//    @OneToMany(mappedBy = "size", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+//    private List<ProductSize> productSizes;
 
     @Column(name = "mo_ta", nullable = false)
     @Nationalized
@@ -63,5 +76,8 @@ public class ChiTietSanPham {
 
     @Column(name = "gia_ban")
     private BigDecimal giaBan;
+
+    @Enumerated(EnumType.STRING)
+    private TypeStatus typeStatus;
 
 }

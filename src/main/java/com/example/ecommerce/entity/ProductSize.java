@@ -4,24 +4,25 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Nationalized;
 
 /**
  * @author caodinh
  */
 @Entity
-@Table(name = "category")
+@Table(name = "product_size")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category {
+public class ProductSize {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -29,14 +30,12 @@ public class Category {
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "VARCHAR(36)")
     private String id;
 
-    @Column(name = "ma", unique = true)
-    private String ma;
+    @ManyToOne
+    @JoinColumn(name = "id_chi_tiet_sp")
+    private ChiTietSanPham chiTietSP;
 
-    @Column(name = "ten", nullable = false)
-    @Nationalized
-    private String ten;
+    @ManyToOne
+    @JoinColumn(name = "id_size")
+    private Size size;
 
-    @Column(name = "img", nullable = false)
-    @Nationalized
-    private String img;
 }

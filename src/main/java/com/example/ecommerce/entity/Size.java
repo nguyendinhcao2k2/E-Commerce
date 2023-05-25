@@ -1,7 +1,10 @@
 package com.example.ecommerce.entity;
 
+import com.example.ecommerce.infrastructures.constants.TypeSize;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -10,18 +13,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Nationalized;
 
 /**
  * @author caodinh
  */
 @Entity
-@Table(name = "category")
+@Table(name = "size")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category {
+public class Size {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -32,11 +34,10 @@ public class Category {
     @Column(name = "ma", unique = true)
     private String ma;
 
-    @Column(name = "ten", nullable = false)
-    @Nationalized
+    @Column(name = "ten")
     private String ten;
 
-    @Column(name = "img", nullable = false)
-    @Nationalized
-    private String img;
+    @Enumerated(EnumType.STRING)
+    private TypeSize type;
+
 }

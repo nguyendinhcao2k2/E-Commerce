@@ -40,6 +40,10 @@ public class GioHangChiTiet {
     @JoinColumn(name = "id_gio_hang")
     private GioHang gioHang;
 
+    @ManyToOne
+    @JoinColumn(name = "id_size")
+    private Size size;
+
     @Column(name = "so_luong")
     private int soLuong;
 

@@ -7,18 +7,21 @@ import com.example.ecommerce.entity.ChiTietSanPham;
 import com.example.ecommerce.entity.ChucVu;
 import com.example.ecommerce.entity.MauSac;
 import com.example.ecommerce.entity.NhaSanXuat;
+import com.example.ecommerce.entity.ProductSize;
 import com.example.ecommerce.entity.Season;
+import com.example.ecommerce.entity.Size;
 import com.example.ecommerce.entity.User;
+import com.example.ecommerce.infrastructures.constants.TypeSize;
+import com.example.ecommerce.infrastructures.constants.TypeStatus;
 import com.example.ecommerce.repository.AdminRepository;
 import com.example.ecommerce.repository.CategoryRepository;
 import com.example.ecommerce.repository.ChiTietSanPhamRepository;
 import com.example.ecommerce.repository.ChucVuRepository;
-import com.example.ecommerce.repository.GioHangChiTietRepository;
-import com.example.ecommerce.repository.GioHangRepository;
-import com.example.ecommerce.repository.HoaDonRepository;
 import com.example.ecommerce.repository.MauSacRepository;
 import com.example.ecommerce.repository.NhaSanXuatRepository;
+import com.example.ecommerce.repository.ProductSizeRepository;
 import com.example.ecommerce.repository.SeasonRepository;
+import com.example.ecommerce.repository.SizeRepository;
 import com.example.ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -31,7 +34,7 @@ import java.math.BigDecimal;
 
 
 /**
- * @author phongtt35
+ * @author caodinh
  */
 
 @SpringBootApplication
@@ -50,12 +53,11 @@ public class DBGenerator implements CommandLineRunner {
     private ChucVuRepository chucVuRepository;
     @Autowired
     private SeasonRepository seasonRepository;
+
     @Autowired
-    private GioHangChiTietRepository gioHangChiTietRepository;
+    private ProductSizeRepository productSizeRepository;
     @Autowired
-    private GioHangRepository gioHangRepository;
-    @Autowired
-    private HoaDonRepository hoaDonRepository;
+    private SizeRepository sizeRepository;
     @Autowired
     private MauSacRepository mauSacRepository;
     @Autowired
@@ -67,53 +69,167 @@ public class DBGenerator implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         //Gen Chức Vụ
-        ChucVu chucVu = new ChucVu(null,"CV001","User");
+        ChucVu chucVu = new ChucVu(null, "CV001", "User");
         chucVuRepository.save(chucVu);
-        ChucVu chucVu1 = new ChucVu(null,"CV002","Admin");
+        ChucVu chucVu1 = new ChucVu(null, "CV002", "Admin");
         chucVuRepository.save(chucVu1);
 
+        //Gen Size
+        Size sizeShoe35 = new Size(null, "SZ001", "35", TypeSize.SHOE_SIZE);
+        sizeRepository.save(sizeShoe35);
+        Size sizeShoe36 = new Size(null, "SZ002", "36", TypeSize.SHOE_SIZE);
+        sizeRepository.save(sizeShoe36);
+        Size sizeShoe37 = new Size(null, "SZ003", "37", TypeSize.SHOE_SIZE);
+        sizeRepository.save(sizeShoe37);
+        Size sizeShoe38 = new Size(null, "SZ004", "38", TypeSize.SHOE_SIZE);
+        sizeRepository.save(sizeShoe38);
+        Size sizeShoe39 = new Size(null, "SZ005", "39", TypeSize.SHOE_SIZE);
+        sizeRepository.save(sizeShoe39);
+        Size sizeShoe40 = new Size(null, "SZ007", "40", TypeSize.SHOE_SIZE);
+        sizeRepository.save(sizeShoe40);
+        Size sizeShoe41 = new Size(null, "SZ008", "41", TypeSize.SHOE_SIZE);
+        sizeRepository.save(sizeShoe41);
+        Size sizeShoe42 = new Size(null, "SZ009", "42", TypeSize.SHOE_SIZE);
+        sizeRepository.save(sizeShoe42);
+        Size sizeShoe43 = new Size(null, "SZ0010", "43", TypeSize.SHOE_SIZE);
+        sizeRepository.save(sizeShoe43);
+        Size sizeShoe44 = new Size(null, "SZ0011", "44", TypeSize.SHOE_SIZE);
+        sizeRepository.save(sizeShoe44);
+
+        Size sizeClothingS = new Size(null,"SZ0012","S",TypeSize.CLOTHING_SIZE);
+        sizeRepository.save(sizeClothingS);
+        Size sizeClothingM = new Size(null,"SZ0013","M",TypeSize.CLOTHING_SIZE);
+        sizeRepository.save(sizeClothingM);
+        Size sizeClothingL = new Size(null,"SZ0014","L",TypeSize.CLOTHING_SIZE);
+        sizeRepository.save(sizeClothingL);
+        Size sizeClothingXL = new Size(null,"SZ0015","XL",TypeSize.CLOTHING_SIZE);
+        sizeRepository.save(sizeClothingXL);
+        Size sizeClothingXXL = new Size(null,"SZ0016","XXL",TypeSize.CLOTHING_SIZE);
+        sizeRepository.save(sizeClothingXXL);
+
+        //Gen Seson
+        Season season = new Season(null,"SS001","Summer");
+        seasonRepository.save(season);
+        Season season2 = new Season(null,"SS002","Autumn");
+        seasonRepository.save(season2);
+        Season season3 = new Season(null,"SS003","Winter");
+        seasonRepository.save(season3);
+        Season season4 = new Season(null,"SS004","Spring");
+        seasonRepository.save(season4);
+
         //Gen Category
-        Category category = new Category(null,"CT001","Quần");
+        Category category = new Category(null, "CT001", "Quần","/common/quan_cate.webp");
         categoryRepository.save(category);
-        Category category2 = new Category(null,"CT002","Áo");
+        Category category2 = new Category(null, "CT002", "Áo","/common/ao_cate.webp");
         categoryRepository.save(category2);
-        Category category3 = new Category(null,"CT003","Giày");
+        Category category3 = new Category(null, "CT003", "Giày","/common/giay_cate.webp");
         categoryRepository.save(category3);
 
         //Gen Màu Sắc
-        MauSac mauSac = new MauSac(null,"MS001","Đỏ");
+        MauSac mauSac = new MauSac(null, "MS001", "Đỏ");
         mauSacRepository.save(mauSac);
-        MauSac mauSac1 = new MauSac(null,"MS002","Xanh");
+        MauSac mauSac1 = new MauSac(null, "MS002", "Xanh");
         mauSacRepository.save(mauSac1);
-        MauSac mauSac2 = new MauSac(null,"MS003","Đen");
+        MauSac mauSac2 = new MauSac(null, "MS003", "Đen");
         mauSacRepository.save(mauSac2);
-        MauSac mauSac3 = new MauSac(null,"MS004","Trắng");
+        MauSac mauSac3 = new MauSac(null, "MS004", "Trắng");
         mauSacRepository.save(mauSac3);
 
         //Gen NhaSan Xuat
-        NhaSanXuat nhaSanXuat = new NhaSanXuat(null,"NSX001","Premia");
+        NhaSanXuat nhaSanXuat = new NhaSanXuat(null, "NSX001", "Premia");
         nhaSanXuatRepository.save(nhaSanXuat);
-        NhaSanXuat nhaSanXuat1 = new NhaSanXuat(null,"NSX002","Congo");
-        nhaSanXuatRepository.save(nhaSanXuat1);
-        NhaSanXuat nhaSanXuat2 = new NhaSanXuat(null,"NSX003","GiuDas");
-        nhaSanXuatRepository.save(nhaSanXuat2);
+
 
         //Gen ChiTiet San Pham
-        ChiTietSanPham chiTietSanPham = new ChiTietSanPham(null,"Áo 2 màu cho nam và nữ",nhaSanXuat,category2,mauSac2,"Chất Liệu Vải Được làm bằng Cotton mát mẻ không bị ngứa","static/images/ao/ao_polo.webp",200, BigDecimal.valueOf(300));
+        ChiTietSanPham chiTietSanPham = new ChiTietSanPham(null, "Áo Polo Exmate Pro", nhaSanXuat, category2, mauSac3, season,  "Chất Liệu Vải Được làm bằng Cotton mát mẻ không bị ngứa", "/ao/ao_polo.webp", 200, BigDecimal.valueOf(300), TypeStatus.AVAILABLE);
         chiTietSanPhamRepository.save(chiTietSanPham);
-        ChiTietSanPham chiTietSanPham1 = new ChiTietSanPham(null,"Quần Vải Sang Chảnh",nhaSanXuat1,category,mauSac3,"Chất Liệu Vải Được làm bằng Cotton mát mẻ không bị ngứa","static/images/pants/quan_jean.webp",200, BigDecimal.valueOf(150));
+        ChiTietSanPham chiTietSanPham11 = new ChiTietSanPham(null, "Áo chống nắng Promier", nhaSanXuat, category2, mauSac2, season2, "Chất Liệu Vải Được làm bằng từ vải dù giúp người mặc cảm thấy không nóng cũng như không lạnh vào tiết trời dịu êm", "/ao/ao_unisex.webp", 200, BigDecimal.valueOf(400),TypeStatus.AVAILABLE);
+        chiTietSanPhamRepository.save(chiTietSanPham11);
+        ChiTietSanPham chiTietSanPham1 = new ChiTietSanPham(null, "Quần Jean Xanh Ngọc", nhaSanXuat, category, mauSac1, season4, "Chất Liệu Vải Được làm bằng diều gió mát mẻ không bị ngứa", "/quan/quan_jean.webp", 200, BigDecimal.valueOf(150),TypeStatus.AVAILABLE);
         chiTietSanPhamRepository.save(chiTietSanPham1);
-        ChiTietSanPham chiTietSanPham2 = new ChiTietSanPham(null,"Giày đẹp cho nam và nữ",nhaSanXuat2,category3,mauSac3,"Giày được làm bằng vải tơ tằm được dệt cách đây 300 năm,thuộc hàng cao cấp và hiếm nhất","static/images/shoes/giay_cho_nam.webp",200, BigDecimal.valueOf(300));
+        ChiTietSanPham chiTietSanPham12 = new ChiTietSanPham(null, "Quần đùi thoáng mát Exmate", nhaSanXuat, category, mauSac3, season, "Chất liệu được làm từ vải Cotton siêu thoáng mát thấm hút mồ hôi siêu đỉnh", "/quan/quan_vip_pro.webp", 200, BigDecimal.valueOf(150),TypeStatus.AVAILABLE);
+        chiTietSanPhamRepository.save(chiTietSanPham12);
+        ChiTietSanPham chiTietSanPham2 = new ChiTietSanPham(null, "Giày đẹp cho nam và nữ", nhaSanXuat, category3, mauSac3, season3,"Giày được làm bằng vải tơ tằm được dệt cách đây 300 năm,thuộc hàng cao cấp và hiếm nhất", "/giay/giay_cho_nam_nu.jpg", 200, BigDecimal.valueOf(400),TypeStatus.AVAILABLE);
         chiTietSanPhamRepository.save(chiTietSanPham2);
+        ChiTietSanPham chiTietSanPham22 = new ChiTietSanPham(null, "Giày đẹp cho nam Exmate Cool", nhaSanXuat, category3, mauSac2, season4, "Giày được làm bằng vải lụa thời coogggo từ 2000 năm trước", "/giay/giay_cho_nam.webp", 200, BigDecimal.valueOf(900),TypeStatus.AVAILABLE);
+        chiTietSanPhamRepository.save(chiTietSanPham22);
+
+        //Gen ProductSize
+        ProductSize productSize1 = new ProductSize(null,chiTietSanPham,sizeClothingS);
+        productSizeRepository.save(productSize1);
+        ProductSize productSize2 = new ProductSize(null,chiTietSanPham,sizeClothingM);
+        productSizeRepository.save(productSize2);
+        ProductSize productSize3 = new ProductSize(null,chiTietSanPham,sizeClothingL);
+        productSizeRepository.save(productSize3);
+        ProductSize productSize4 = new ProductSize(null,chiTietSanPham,sizeClothingXL);
+        productSizeRepository.save(productSize4);
+        ProductSize productSize5 = new ProductSize(null,chiTietSanPham,sizeClothingXXL);
+        productSizeRepository.save(productSize5);
+
+        ProductSize productSize6 = new ProductSize(null,chiTietSanPham11,sizeClothingS);
+        productSizeRepository.save(productSize6);
+        ProductSize productSize7 = new ProductSize(null,chiTietSanPham11,sizeClothingM);
+        productSizeRepository.save(productSize7);
+        ProductSize productSize8 = new ProductSize(null,chiTietSanPham11,sizeClothingL);
+        productSizeRepository.save(productSize8);
+        ProductSize productSize9 = new ProductSize(null,chiTietSanPham11,sizeClothingXL);
+        productSizeRepository.save(productSize9);
+        ProductSize productSize10 = new ProductSize(null,chiTietSanPham11,sizeClothingXXL);
+        productSizeRepository.save(productSize10);
+
+        ProductSize productSize11 = new ProductSize(null,chiTietSanPham1,sizeClothingS);
+        productSizeRepository.save(productSize11);
+        ProductSize productSize12 = new ProductSize(null,chiTietSanPham1,sizeClothingM);
+        productSizeRepository.save(productSize12);
+        ProductSize productSize13 = new ProductSize(null,chiTietSanPham1,sizeClothingL);
+        productSizeRepository.save(productSize13);
+        ProductSize productSize14 = new ProductSize(null,chiTietSanPham1,sizeClothingXL);
+        productSizeRepository.save(productSize14);
+        ProductSize productSize15 = new ProductSize(null,chiTietSanPham1,sizeClothingXXL);
+        productSizeRepository.save(productSize15);
+
+        ProductSize productSize16 = new ProductSize(null,chiTietSanPham12,sizeClothingS);
+        productSizeRepository.save(productSize16);
+        ProductSize productSize17 = new ProductSize(null,chiTietSanPham12,sizeClothingM);
+        productSizeRepository.save(productSize17);
+        ProductSize productSize18 = new ProductSize(null,chiTietSanPham12,sizeClothingL);
+        productSizeRepository.save(productSize18);
+        ProductSize productSize19 = new ProductSize(null,chiTietSanPham12,sizeClothingXL);
+        productSizeRepository.save(productSize19);
+        ProductSize productSize20 = new ProductSize(null,chiTietSanPham12,sizeClothingXXL);
+        productSizeRepository.save(productSize20);
+
+        ProductSize productSize21 = new ProductSize(null,chiTietSanPham2,sizeShoe38);
+        productSizeRepository.save(productSize21);
+        ProductSize productSize22 = new ProductSize(null,chiTietSanPham2,sizeShoe39);
+        productSizeRepository.save(productSize22);
+        ProductSize productSize23 = new ProductSize(null,chiTietSanPham2,sizeShoe40);
+        productSizeRepository.save(productSize23);
+        ProductSize productSize24 = new ProductSize(null,chiTietSanPham2,sizeShoe41);
+        productSizeRepository.save(productSize24);
+        ProductSize productSize25 = new ProductSize(null,chiTietSanPham2,sizeShoe42);
+        productSizeRepository.save(productSize25);
+
+        ProductSize productSize26 = new ProductSize(null,chiTietSanPham22,sizeShoe38);
+        productSizeRepository.save(productSize26);
+        ProductSize productSize27 = new ProductSize(null,chiTietSanPham22,sizeShoe39);
+        productSizeRepository.save(productSize27);
+        ProductSize productSize28 = new ProductSize(null,chiTietSanPham22,sizeShoe40);
+        productSizeRepository.save(productSize28);
+        ProductSize productSize29 = new ProductSize(null,chiTietSanPham22,sizeShoe41);
+        productSizeRepository.save(productSize29);
+        ProductSize productSize30 = new ProductSize(null,chiTietSanPham22,sizeShoe42);
+        productSizeRepository.save(productSize30);
+
 
         //Gen User
-        User user = new User(null,"US001","Nguyen Dinh Cao","caondph20015@fpt.edu.vn","img",null,chucVu);
+        User user = new User(null, "US001", "Nguyen Dinh Cao", "caondph20015@fpt.edu.vn", "img", null, chucVu);
         userRepository.save(user);
-        User user1 = new User(null,"US002","Cao Coc","caococ2002","img",null,chucVu);
+        User user1 = new User(null, "US002", "Cao Coc", "caococ2002", "img", null, chucVu);
         userRepository.save(user1);
 
         //Gen Admin
-        Admin admin = new Admin(null,"AM001","Nam Dinh","0943232913","namdinh","123456",chucVu1);
+        Admin admin = new Admin(null, "AM001", "Nam Dinh", "0943232913", "namdinh", "123456", chucVu1);
         adminRepository.save(admin);
     }
 
