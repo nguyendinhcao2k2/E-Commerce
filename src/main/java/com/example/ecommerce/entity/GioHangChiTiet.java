@@ -40,9 +40,11 @@ public class GioHangChiTiet {
     @JoinColumn(name = "id_gio_hang")
     private GioHang gioHang;
 
-    @ManyToOne
-    @JoinColumn(name = "id_size")
-    private Size size;
+    @Column(name = "size_name")
+    private String sizeName;
+
+    @Column(name = "color_name")
+    private String color_name;
 
     @Column(name = "so_luong")
     private int soLuong;

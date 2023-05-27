@@ -52,16 +52,11 @@ public class ChiTietSanPham {
     @JoinColumn(name = "id_category")
     private Category category;
 
-    @ManyToOne
-    @JoinColumn(name = "id_mausac")
-    private MauSac mauSac;
 
     @ManyToOne
     @JoinColumn(name = "id_season")
     private Season season;
 
-//    @OneToMany(mappedBy = "size", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-//    private List<ProductSize> productSizes;
 
     @Column(name = "mo_ta", nullable = false)
     @Nationalized

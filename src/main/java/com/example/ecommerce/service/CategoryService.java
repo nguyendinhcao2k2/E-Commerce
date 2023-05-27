@@ -1,6 +1,6 @@
 package com.example.ecommerce.service;
 
-import com.example.ecommerce.model.CategoryResponse;
+import com.example.ecommerce.model.response.CategoryResponse;
 
 import java.util.List;
 

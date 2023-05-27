@@ -1,4 +1,4 @@
-package com.example.ecommerce.model;
+package com.example.ecommerce.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

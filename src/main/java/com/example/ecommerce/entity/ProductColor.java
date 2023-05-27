@@ -1,44 +1,41 @@
 package com.example.ecommerce.entity;
 
-/**
- * @author caodinh
- */
-
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Nationalized;
 
+/**
+ * @author caodinh
+ */
 @Entity
-@Table(name = "season")
+@Table(name = "product_color")
+@Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-public class Season {
+public class ProductColor {
 
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "VARCHAR(36)")
     private String id;
 
-    @Column(name = "ma", unique = true, nullable = false, length = 20)
-    private String ma;
+    @ManyToOne
+    @JoinColumn(name = "id_chi_tiet_sp")
+    private ChiTietSanPham chiTietSP;
 
-    @Column(name = "ten", nullable = false, length = 30)
-    @Nationalized
-    private String ten;
+    @ManyToOne
+    @JoinColumn(name = "id_mau_sac")
+    private MauSac mauSac;
 
-    @Column(name = "img", nullable = false)
-    @Nationalized
-    private String img;
 }
