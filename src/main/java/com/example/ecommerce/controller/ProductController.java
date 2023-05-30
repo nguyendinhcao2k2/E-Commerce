@@ -69,6 +69,7 @@ public class ProductController {
         return "detail";
     }
 
+
     public void addArrivedProduct(SanPhamResponse sanPhamResponse) {
         List<SanPhamResponse> sanPhamResponses = (List<SanPhamResponse>) session.getAttribute("arrivedCart");
         if (sanPhamResponses == null) {

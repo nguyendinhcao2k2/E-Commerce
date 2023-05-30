@@ -26,4 +26,9 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
 
     @Query("select new com.example.ecommerce.model.response.SanPhamResponse(ctsp.id,ctsp.tenSP,ctsp.Img,ctsp.giaBan,ctsp.moTa) from ChiTietSanPham ctsp where ctsp.id = :id")
     Optional<SanPhamResponse> getOneByID(@Param("id")String id);
+
+    @Query("select new com.example.ecommerce.model.response.SanPhamResponse(ctsp.id, ctsp.tenSP, ctsp.Img, ctsp.giaBan, '') from ChiTietSanPham ctsp where ctsp.tenSP like %:tenSP%")
+    List<SanPhamResponse> searchByName(@Param("tenSP")String tenSP);
+
+
 }

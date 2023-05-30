@@ -41,4 +41,10 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
         }
         return sanPhamResponse;
     }
+
+    @Override
+    public List<SanPhamResponse> searchByName(String tenSP) {
+        return chiTietSanPhamRepository.searchByName(tenSP);
+    }
+
 }

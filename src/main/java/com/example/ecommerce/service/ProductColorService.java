@@ -2,6 +2,7 @@ package com.example.ecommerce.service;
 
 import com.example.ecommerce.model.response.ProductColorResponse;
 import com.example.ecommerce.model.response.ProductSizeResponse;
+import com.example.ecommerce.model.response.SanPhamResponse;
 
 import java.util.List;
 
@@ -11,5 +12,7 @@ import java.util.List;
 public interface ProductColorService {
 
     List<ProductColorResponse> getAllByCtspID(String id);
+
+    List<SanPhamResponse> filterProduct(String color, String price);
 
 }
