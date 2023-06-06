@@ -1,0 +1,15 @@
+.container {
+    max-width: 960px;
+}
+
+.lh-condensed {
+    line-height: 1.25;
+}
+
+.validate-text {
+    color: red;
+    display: flex;
+    align-items: center;
+    white-space: normal;
+    overflow: hidden;
+}

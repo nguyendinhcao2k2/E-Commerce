@@ -9,7 +9,7 @@
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="../static/img/favicon.ico" rel="icon">
+    <link th:href="@{/static/img/favicon.ico}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -20,10 +20,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="../static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link th:href="@{/static/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="../static/css/style.css" rel="stylesheet">
+    <link th:href="@{/static/css/style.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -62,45 +62,43 @@
                 </tr>
                 </thead>
                 <tbody class="align-middle">
-                <tr>
-                    <td class="align-middle"><img src="img/product-5.jpg" alt="" style="width: 50px;"> Colorful Stylish
-                        Shirt
+                <tr th:name="trGH" th:each="giohang,giohangIndex   : ${session.carts.chiTietGioHang}">
+                    <td class="align-middle" th:text="${giohang.chiTietSP.tenSP}">
+                        <img alt="" style="width: 50px;" th:src="@{|/static/img${giohang.chiTietSP.img}}">
                     </td>
-                    <td class="align-middle">$150</td>
+                    <td class="align-middle" th:text="${giohang.chiTietSP.giaBan} + '$'"></td>
                     <td class="align-middle">
                         <div class="input-group quantity mx-auto" style="width: 100px;">
                             <div class="input-group-btn">
-                                <button class="btn btn-sm btn-primary btn-minus">
+                                <button th:attr="onclick=|minus('${giohang.getChiTietSP.getId}','${giohang.getSizeName}','${giohang.getColor_name}',${giohangIndex.index})|"
+                                        class="btn btn-sm btn-primary btn-minus">
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">
+                            <input type="text" th:name="${'amount' + giohangIndex.index  + ''}"
+                                   class="form-control form-control-sm bg-secondary text-center"
+                                   th:value="${giohang.soLuong}">
                             <div class="input-group-btn">
-                                <button class="btn btn-sm btn-primary btn-plus">
+                                <button th:attr="onclick=|plusAmount('${giohang.getChiTietSP.getId}','${giohang.getSizeName}','${giohang.getColor_name}',${giohangIndex.index})|"
+                                        class="btn btn-sm btn-primary btn-plus">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
                     </td>
-                    <td class="align-middle">S</td>
-                    <td class="align-middle">Đỏ</td>
-                    <td class="align-middle">$150</td>
+                    <td class="align-middle" th:text="${giohang.sizeName}"></td>
+                    <td class="align-middle" th:text="${giohang.color_name}"></td>
+                    <td class="align-middle" th:text="${giohang.soLuong * giohang.chiTietSP.giaBan} +'$' "></td>
                     <td class="align-middle">
-                        <button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button>
+                        <button th:attr="onclick=|deleteCart('${giohang.getChiTietSP.getId}','${giohang.getSizeName}','${giohang.getColor_name}')|"
+                                class="btn btn-sm btn-primary"><i
+                                class="fa fa-times"></i></button>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
         <div class="col-lg-4">
-            <form class="mb-5" action="">
-                <div class="input-group">
-                    <input type="text" class="form-control p-4" placeholder="Coupon Code">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary">Apply Coupon</button>
-                    </div>
-                </div>
-            </form>
             <div class="card border-secondary mb-5">
                 <div class="card-header bg-secondary border-0">
                     <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
@@ -108,27 +106,33 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-3 pt-1">
                         <h6 class="font-weight-medium">Subtotal</h6>
-                        <h6 class="font-weight-medium">$150</h6>
+                        <h6 class="font-weight-medium" th:id="sumPrice" th:text="${sumPrice}+'$'"></h6>
                     </div>
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between" th:if="${sumPrice > 0}">
                         <h6 class="font-weight-medium">Shipping</h6>
-                        <h6 class="font-weight-medium">$10</h6>
+                        <h6 class="font-weight-medium">10$</h6>
+                    </div>
+                    <div class="d-flex justify-content-between" th:if="${sumPrice == 0}">
+                        <h6 class="font-weight-medium">Shipping</h6>
+                        <h6 class="font-weight-medium">0$</h6>
                     </div>
                 </div>
                 <div class="card-footer border-secondary bg-transparent">
-                    <div class="d-flex justify-content-between mt-2">
+                    <div class="d-flex justify-content-between mt-2" th:if="${sumPrice > 0}">
                         <h5 class="font-weight-bold">Total</h5>
-                        <h5 class="font-weight-bold">$160</h5>
+                        <h5 class="font-weight-bold" th:id="totalPrice" th:text="${sumPrice + 10} +'$'"></h5>
                     </div>
-                    <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+                    <div class="d-flex justify-content-between mt-2" th:if="${sumPrice == 0}">
+                        <h5 class="font-weight-bold">Total</h5>
+                        <h5 class="font-weight-bold" th:text="${0} +'$'"></h5>
+                    </div>
+                    <a th:if="${session.carts.chiTietGioHang.size > 0}" th:href="@{/api/user/view-check-out}" class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- Cart End -->
-
-
 <!-- Footer -->
 <div th:insert="~{fragments/footer}"></div>
 <!--End Footer-->
@@ -137,15 +141,17 @@
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="../static/lib/easing/easing.min.js"></script>
-<script src="../static/lib/owlcarousel/owl.carousel.min.js"></script>
+<script th:src="@{/static/lib/easing/easing.min.js}"></script>
+<script th:src="@{/static/lib/owlcarousel/owl.carousel.min.js}"></script>
 
 <!-- Contact Javascript File -->
-<script src="../static/mail/jqBootstrapValidation.min.js"></script>
-<script src="../static/mail/contact.js"></script>
+<script th:src="@{/static/mail/jqBootstrapValidation.min.js}"></script>
+<script th:src="@{/static/mail/contact.js}"></script>
 
 <!-- Template Javascript -->
-<script src="../static/js/main.js"></script>
+<script th:src="@{/static/js/main.js}"></script>
+
+<script th:src="@{/static/js/cart.js}"></script>
 </body>
 
 </html>

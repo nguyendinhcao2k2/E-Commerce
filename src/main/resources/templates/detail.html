@@ -9,7 +9,7 @@
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link th:href="@{/static/img/favicon.ico}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -51,7 +51,8 @@
             <div id="product-carousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner border">
                     <div class="carousel-item active">
-                        <img class="w-100 h-100" style="height: 300px" th:src="@{|/static/img${detailProducts.img}}" alt="Image">
+                        <img class="w-100 h-100" style="height: 300px" th:src="@{|/static/img${detailProducts.img}}"
+                             alt="Image">
                     </div>
                 </div>
             </div>
@@ -72,17 +73,21 @@
             <p class="mb-4" th:text="${detailProducts.moTa}"></p>
             <div class="d-flex mb-3">
                 <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
-                    <div class="custom-control custom-radio custom-control-inline" th:each="size, i : ${prSize}">
-                        <input type="radio" class="custom-control-input" th:id="'size-' + ${i.index}" name="size" th:value="${size.ten}">
-                        <label class="custom-control-label" th:attr="for='size-' + ${i.index}" th:text="${size.ten}"></label>
-                    </div>
+                <div class="custom-control custom-radio custom-control-inline" th:each="size, i : ${prSize}">
+                    <input type="radio" class="custom-control-input" th:id="'size-' + ${i.index}" name="size"
+                           th:value="${size.ten}">
+                    <label class="custom-control-label" th:attr="for='size-' + ${i.index}"
+                           th:text="${size.ten}"></label>
+                </div>
             </div>
             <div class="d-flex mb-4">
                 <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
-                    <div class="custom-control custom-radio custom-control-inline" th:each="color, i : ${prColor}">
-                        <input type="radio" class="custom-control-input" th:id="'color-' + ${i.index}" name="color" th:value="${color.ten}">
-                        <label class="custom-control-label" th:attr="for='color-' + ${i.index}" th:text="${color.ten}"></label>
-                    </div>
+                <div class="custom-control custom-radio custom-control-inline" th:each="color, i : ${prColor}">
+                    <input type="radio" class="custom-control-input" th:id="'color-' + ${i.index}" name="color"
+                           th:value="${color.ten}">
+                    <label class="custom-control-label" th:attr="for='color-' + ${i.index}"
+                           th:text="${color.ten}"></label>
+                </div>
             </div>
             <div class="d-flex align-items-center mb-4 pt-2">
                 <div class="input-group quantity mr-3" style="width: 130px;">
@@ -91,14 +96,16 @@
                             <i class="fa fa-minus"></i>
                         </button>
                     </div>
-                    <input type="text" class="form-control bg-secondary text-center" value="1">
+                    <input type="text" class="form-control bg-secondary text-center" th:id="amount" value="1">
                     <div class="input-group-btn">
                         <button class="btn btn-primary btn-plus">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
                 </div>
-                <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+                <button type="submit" th:attr="onclick=|addToCart('${detailProducts.getId}')|"
+                        class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart
+                </button>
             </div>
             <div class="d-flex pt-2">
                 <div class="d-inline-flex">
@@ -144,6 +151,7 @@ Mặc dù sản phẩm có rất nhiều ưu điểm, tuy nhiên, một nhược
 
 <!-- Template Javascript -->
 <script th:src="@{/static/js/main.js}"></script>
+<script th:src="@{/static/js/cart.js}"></script>
 </body>
 
 </html>

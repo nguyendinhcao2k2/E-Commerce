@@ -9,7 +9,7 @@
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link th:href="@{/static/img/favicon.ico}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -142,12 +142,10 @@
                                 <h6 th:name="giaBan" th:text="${detailProdct.giaBan}+'$'"></h6>
                             </div>
                         </div>
-                        <div class="card-footer d-flex justify-content-between bg-light border">
+                        <div class="card-footer d-flex justify-content-between justify-content-center bg-light border">
                             <a th:href="@{/api/user/view-detail-product/{id}(id=${detailProdct.id})}"
                                class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View
                                 Detail</a>
-                            <a href="" class="btn btn-sm text-dark p-0"><i
-                                    class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
                         </div>
                     </div>
                 </div>

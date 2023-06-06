@@ -1,5 +1,7 @@
 package com.example.ecommerce.controller;
 
+import com.example.ecommerce.entity.GioHang;
+import com.example.ecommerce.entity.GioHangChiTiet;
 import com.example.ecommerce.model.response.SanPhamResponse;
 import com.example.ecommerce.service.CategoryService;
 import com.example.ecommerce.service.ChiTietSanPhamService;
@@ -39,6 +41,13 @@ public class ProductController {
 
     @GetMapping("/products")
     public String getAllProducts(Model model) {
+        GioHang gioHang = (GioHang) session.getAttribute("carts");
+        if (gioHang == null) {
+            gioHang = new GioHang();
+            List<GioHangChiTiet> gioHangChiTietList = new ArrayList<>();
+            gioHang.setChiTietGioHang(gioHangChiTietList);
+            session.setAttribute("carts", gioHang);
+        }
         model.addAttribute("categories", categoryService.getAllCategory());
         model.addAttribute("detailProducts", chiTietSanPhamService.getAllSanPham());
         return "shop";

@@ -1,5 +1,6 @@
 package com.example.ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Nationalized;
 
@@ -29,6 +31,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class GioHang {
 
     @Id
@@ -43,9 +46,6 @@ public class GioHang {
     @Column(name = "ngay_tao")
     private Date ngayTao;
 
-    @Column(name = "ngay_thanh_toan")
-    private Date ngayThanhToan;
-
     @Column(name = "ten_nguoi_nhan", nullable = false)
     @Nationalized
     private String tenNguoiNhan;
@@ -57,14 +57,20 @@ public class GioHang {
     @Column(name = "sdt")
     private String sdt;
 
-    @Column(name = "tinh_trang")
-    private int tinhTrang;
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "note", nullable = false)
+    @Nationalized
+    private String note;
+
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_hoa_don")
     private HoaDon hoaDon;
 
     @OneToMany(mappedBy = "gioHang", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<GioHangChiTiet> chiTietGioHang;
 
 }
