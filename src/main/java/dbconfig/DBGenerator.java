@@ -295,12 +295,6 @@ public class DBGenerator implements CommandLineRunner {
         productSizeRepository.save(productSize30);
 
 
-        //Gen User
-        User user = new User(null, "US001", "Nguyen Dinh Cao", "caondph20015@fpt.edu.vn", "img", null, chucVu);
-        userRepository.save(user);
-        User user1 = new User(null, "US002", "Cao Coc", "caococ2002", "img", null, chucVu);
-        userRepository.save(user1);
-
         //Gen Admin
         Admin admin = new Admin(null, "AM001", "Nam Dinh", "0943232913", "namdinh", "123456", chucVu1);
         adminRepository.save(admin);

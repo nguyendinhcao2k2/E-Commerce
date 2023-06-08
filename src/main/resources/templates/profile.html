@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>EShopper - Bootstrap Shop Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link th:href="@{/static/img/favicon.ico}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link th:href="@{/static/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link th:href="@{/static/css/style.css}" rel="stylesheet">
+    <link th:href="@{/static/css/authen/profile.css}" rel="stylesheet">
+</head>
+
+<body>
+<!-- Start Header -->
+<div class="container-fluid">
+    <div class="row bg-secondary py-2 px-xl-5">
+        <div class="col-lg-6 d-none d-lg-block">
+            <div class="d-inline-flex align-items-center">
+                <a class="text-dark" href="">FAQs</a>
+                <span class="text-muted px-2">|</span>
+                <a class="text-dark" href="">Help</a>
+                <span class="text-muted px-2">|</span>
+                <a class="text-dark" href="">Support</a>
+            </div>
+        </div>
+        <div class="col-lg-6 text-center text-lg-right">
+            <div class="d-inline-flex align-items-center">
+                <a class="text-dark px-2" href="https://www.facebook.com/">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a class="text-dark px-2" href="https://twitter.com/?lang=en">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a class="text-dark px-2" href="https://www.instagram.com/nguyen_dinh_cao22/">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a class="text-dark pl-2" href="https://www.youtube.com/">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Header -->
+<div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
+    <div class="card p-4">
+        <div class=" image d-flex flex-column justify-content-center align-items-center">
+            <button class="btn btn-secondary"><img th:src="${session.info.getPicture()}" height="100" width="100"/>
+            </button>
+            <span class="name mt-3" th:text="${session.info.getName()}"></span> <span class="idd" th:text="${session.info.getEmail()}"></span>
+            <div class="d-flex flex-row justify-content-center align-items-center gap-2"><span class="idd1">Oxc4c16a645_b21a</span>
+                <span><i class="fa fa-copy"></i></span></div>
+            <div class=" d-flex mt-2">
+                <a class="custom-link" th:href="@{/api/user/home}">
+                    <span class="button">Back Home</span>
+                </a>
+            </div>
+            <div class="text mt-3">
+                <span>Eleanor Pena is a creator of minimalistic x bold graphics and digital artwork.<br><br> Artist/ Creative Director by Day #NFT minting@ with FND night. </span>
+            </div>
+            <div class="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"><span><i
+                    class="fa fa-twitter"></i></span> <span><i class="fa fa-facebook-f"></i></span> <span><i
+                    class="fa fa-instagram"></i></span> <span><i class="fa fa-linkedin"></i></span></div>
+            <div class=" px-2 rounded mt-4 date "><span class="join">Joined May,2021</span></div>
+        </div>
+    </div>
+</div>
+
+
+<-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/static/lib/easing/easing.min.js}"></script>
+<script th:src="@{/static/lib/owlcarousel/owl.carousel.min.js}"></script>
+
+<!-- Contact Javascript File -->
+<script th:src="@{/static/mail/jqBootstrapValidation.min.js}"></script>
+<script th:src="@{/static/mail/contact.js}"></script>
+
+<!-- Template Javascript -->
+<script th:src="@{/static/js/main.js}"></script>
+<script th:src="@{/static/js/cart.js}"></script>
+</body>
+
+</html>

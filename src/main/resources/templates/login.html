@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link th:href="@{/static/css/login.css}" rel="stylesheet">
+</head>
+<body>
+<h2>Login Page</h2>
+<div class="container" id="container">
+    <div class="form-container sign-up-container">
+        <form action="#">
+            <h1>User Login </h1>
+            <span>login by google</span>
+            <div class="social-container">
+                <a th:href="@{/oauth2/authorization/google}" class="social"><i class="fab fa-google-plus-g"></i></a>
+            </div>
+            <a th:href="@{api/user/home}">Back To Home</a>
+        </form>
+    </div>
+    <div class="form-container sign-in-container">
+        <form action="#">
+            <h1>Admin Login</h1>
+            <span>login to continue</span>
+            <input type="text" placeholder="Username"/>
+            <input type="password" placeholder="Password"/>
+            <a th:href="@{api/user/home}">Back To Home</a>
+            <button>Sign In</button>
+        </form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>Welcome Back!</h1>
+                <p>To keep connected with us please login with your google account</p>
+                <button class="ghost" id="signIn">Admin Login</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>Hello, Admin!</h1>
+                <p>Enter your personal details and start journey with us</p>
+                <button class="ghost" id="signUp">User Login</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/static/js/login.js}"></script>
+</body>
+</html>

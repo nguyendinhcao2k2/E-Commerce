@@ -37,7 +37,7 @@ public class HoaDonServiceImpl implements HoaDonService {
 
         int ma = Integer.valueOf(maHD);
         ma++;
-        maHD = "GH00" + ma;
+        maHD = "HD00" + ma;
         return maHD;
     }
 

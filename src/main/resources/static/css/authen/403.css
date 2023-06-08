@@ -1,169 +1,242 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans|Nova+Mono');
-:root {
-    --font-header: 'Nova Mono', monospace;
-    --font-text: 'Open Sans', sans-serif;
-    --color-theme: #F1EEDB;
-    --color-bg: #282B24;
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Sedgwick+Ave+Display');
 
-    --animation-sentence: 'You know you\'re supposed to leave, right?';
-    --animation-duration: 40s;
+:root {
+    --font-display: 'Sedgwick Ave Display';
+    --font-sans-serif: 'IBM Plex Mono';
+    --box-shadow: 0px 21px 34px 0px rgba(0, 0, 0, 0.89);
+    --color-bg: linear-gradient(to bottom, rgba(35,37,38,1) 0%,rgba(32,38,40,1) 100%);
+    --scene-width: 400px;
+    --scene-height: 400px;
+    --delay-base: 500ms;
+    --delay-added: 100ms;
+    --acc-back: cubic-bezier(0.390, 0.575, 0.565, 1.000);
 }
-* {
-    box-sizing: border-box;
+
+*,
+*:before,
+*:after{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color: rgba(255,255,255,0);
+}
+
+body{
+    width: 100vw; height: 100vh;
     margin: 0;
     padding: 0;
-}
-body {
-    width: 100%;
-    font-family: var(--font-text);
-    color: var(--color-theme);
     background: var(--color-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
     overflow: hidden;
 }
-.container {
+
+.scene{
+    position: relative;
+    width: var(--scene-width);
+    height: var(--scene-height);
+    transition: transform 600ms var(--acc-back);
+    display: flex;
+    align-items: center;
+}
+
+.scene:hover{
+    transform: scale(.98) skewY(-1deg);
+}
+
+.scene > *{
+    transition: transform 600ms var(--acc-back);
+}
+
+.text{
+    transition: transform 600ms var(--acc-back), opacity 100ms ease-in;
+    height: inherit;
+    width: 100%;
+    height: 100%;
+    z-index: 7;
+    position: relative;
+    pointer-events: none;
+}
+
+.scene:hover .text{
+    opacity: 1;
+    transform: scale(.91);
+}
+
+@keyframes popInImg{
+    0%{
+        transform: skewY(5deg) scaleX(.89) scaleY(.89);
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+.text span{
+    display: block;
+    font-family: var(--font-sans-serif);
     text-align: center;
-    margin: 1rem 0.5rem 0;
-}
-.container h1 {
-    font-family: var(--font-header);
-    font-size: calc(4rem + 2vw);
-    text-transform: uppercase;
-}
-.container p {
-    text-transform: uppercase;
-    letter-spacing: 0.2rem;
-    font-size: 2rem;
-    margin: 1.5rem 0 3rem;
-}
-svg.keyhole {
-    height: 82px;
-    width: 82px;
+    text-shadow: var(--box-shadow);
+    animation: popIn 600ms var(--acc-back) 1 forwards;
     opacity: 0;
-    visibility: hidden;
-    /* define an animation for the keyhole, to introduce it
-    paused by default, run with a timeout in JavaScript
-    */
-    animation: showKey 0.5s 0.5s paused ease-out forwards;
-}
-svg.key {
-    height: 164px;
-    width: 164px;
-    position: absolute;
-    opacity: 0;
-    visibility: hidden;
-    /* define an animation for the keyhole, to introduce it
-    paused by default, run with a timeout in JavaScript
-    */
-    animation: showKey 0.5s 0.5s paused ease-out forwards;
-}
-.ghost {
-    /* border: 1px solid tomato; */
-    position: absolute;
-    bottom: 5px;
-    left: calc(50% - 100px);
-    width: 200px;
-    height: 200px;
-    /* have the ghost move to the right and to the left of the screen, turning to its central position and repeating the animation twice */
-    animation: hoverGhost calc(var(--animation-duration)/2) ease-in-out 2;
-
-}
-/* introduce text through a pseudo element, connected to the animated div */
-.ghost:before {
-    content: var(--animation-sentence);
-    color: var(--color-theme);
-    border-radius: 50%;
-    position: absolute;
-    bottom: 100%;
-    text-align: center;
-    line-height: 2;
-    padding: 1rem;
-    visibility: hidden;
-    opacity: 0;
-    /* have each string of text introduced as the ghost returns from the right edge of the screen, and for the length of time it takes to cover the central portion (a fourth, which becomes an eight as the animation length is half the total duration) */
-    /* the delay for an hypothetical duration of 40s is 7.5s for the first, 27.5s for the second and finally 40s for the last
-    in fractions and with a bit of math it boils down to 3/16, 27/40 and 1
-    // ! remember to include a slight delay in the animation of the key and keyhole
-    */
-    animation:
-            showText calc(var(--animation-duration)/8) calc(var(--animation-duration)*3/16) ease-out forwards,
-            showNewText calc(var(--animation-duration)/8) calc(var(--animation-duration)*27/40) ease-out forwards,
-            showFinalText calc(var(--animation-duration)/8) var(--animation-duration) ease-out forwards;
-
 }
 
-/* define the keyframe animations
-- hoverghost to have the ghost move right, left and then back to its default position
-- showKey to introduce into view the key (and keyhole) svg
-- showText, showNewText, showFinalText to show the different strings (the implementation is quite quirky and primed for optimization)
- */
-@keyframes hoverGhost {
-    25% {
-        transform: translateX(20vw);
-    }
-    75% {
-        transform: translateX(-20vw);
-    }
-}
-
-@keyframes showKey {
-    to {
-        opacity: 1;
-        visibility: visible;
-    }
-}
-
-
-/* alter the text changing the value of the custom property, weary of changing its value when the pseudo element is hidden and changing its value in the last keyframe (as the animation gives this value as per the "forwards" value of the fill-mode property)  */
-@keyframes showText {
-    2% {
-        opacity: 1;
-        visibility: visible;
-    }
-    98% {
-
-        opacity: 1;
-        visibility: visible;
-    }
-    99% {
-        --animation-sentence: 'You know you\'re supposed to leave, right?';
+@keyframes popIn{
+    0%,13%{
+        transform: scaleX(.89) scaleY(.75);
         opacity: 0;
-        visibility: hidden;
     }
-    100% {
-        --animation-sentence: 'So much to do, so little time...';
-    }
-}
-@keyframes showNewText {
-    2% {
-        --animation-sentence: 'So much to do, so little time...';
-        opacity: 1;
-        visibility: visible;
-    }
-    98% {
+    100%{
 
         opacity: 1;
-        visibility: visible;
-    }
-    99% {
-        --animation-sentence: 'So much to do, so little time...';
-        opacity: 0;
-        visibility: hidden;
-    }
-    100% {
-        --animation-sentence: 'Okay, you seem to care about this. Here\'s a key just for you';
     }
 }
-@keyframes showFinalText {
-    2% {
-        opacity: 1;
-        visibility: visible;
-    }
-    98% {
-        opacity: 1;
-        visibility: visible;
-    }
-    100% {
-        opacity: 0;
-        visibility: hidden;
-    }
+
+.bg-403{
+    font-size: 440px;
+    font-family: var(--font-display);
+    animation-delay: calc(var(--delay-base) + 2 * var(--delay-added));
+    z-index: 0;
+    background: linear-gradient(to top, rgba(32,38,40,0) 25%,rgba(49,57,61,1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: translateX(-25%) translateZ(-100px) skewY(-3deg);
+    position: absolute;
+    pointer-events: none;
+    transition: transform 1200ms var(--acc-back);
+}
+
+.msg{
+    bottom: -38px; right: -21px;
+    font-size: 34px;
+    animation-delay: calc(var(--delay-base) + 3 * var(--delay-added));
+    color: #8b8b8b;
+    margin-top: 144px;
+    letter-spacing: 2px;
+}
+
+.msg span{
+    transform: skewX(-13deg);
+    display: inline-block;
+    color: #fff;
+    letter-spacing: -1px;
+}
+
+.support{
+    bottom: -50px; right: -21px;
+    font-size: 21px;
+    animation-delay: calc(var(--delay-base) + 4 * var(--delay-added));
+    display: block;
+    margin-top: 89px;
+    color: #686a6b;
+}
+
+.support span{
+    margin-bottom: 5px;
+}
+
+.support a{
+    display: inline-block;
+    color: #b2b3b4;
+    text-decoration: none;
+    pointer-events: initial;
+}
+
+.support a:after{
+    content: '';
+    width: 110%; margin-left: -5%;
+    height: 5px;
+    display: block;
+    background: #fff;
+    opacity: .55;
+    margin-top: 13px;
+    outline: 1px solid transparent;
+}
+
+.support a:hover:after{
+    opacity: 1;
+}
+
+.support a:focus,
+.support a:active{
+    outline: none;
+}
+
+@media screen and (max-width: 539px){
+
+}
+
+.overlay{
+    display: block;
+    position: absolute;
+    cursor: pointer;
+    width: 50%;
+    height: 50%;
+    z-index: 1;
+    transform: translateZ(34px);
+}
+
+.overlay:nth-of-type(1){
+    left: 0;
+    top: 0;
+}
+
+.overlay:nth-of-type(2){
+    right: 0;
+    top: 0;
+}
+
+.overlay:nth-of-type(3){
+    bottom: 0;
+    right: 0;
+}
+
+.overlay:nth-of-type(4){
+    bottom: 0;
+    left: 0;
+}
+
+.overlay:nth-of-type(1):hover ~ .lock,
+.overlay:nth-of-type(1):focus ~ .lock{
+    transform-origin: right top;
+    transform:  translateY(-3px) translateX(5px) rotateX(-13deg) rotateY(3deg) rotateZ(-2deg) translateZ(0) scale(.89);
+}
+
+.overlay:nth-of-type(1):hover ~ .bg-403,
+.overlay:nth-of-type(1):focus ~ .bg-403{
+    transform: translateX(-27%) skewY(-3deg) rotateX(-13deg) rotateY(3deg) translateZ(-100px) scale(.89);
+}
+
+.overlay:nth-of-type(2):hover ~ .lock,
+.overlay:nth-of-type(2):focus ~ .lock{
+    transform-origin: left top;
+    transform: translateY(-3px) translateX(5px) rotateX(13deg) rotateY(3deg) rotateZ(2deg) translateZ(0) scale(1.03);
+}
+
+.overlay:nth-of-type(2):hover ~ .bg-403,
+.overlay:nth-of-type(2):focus ~ .bg-403{
+    transform: translateX(-21%) skewY(-3deg) rotateX(13deg) rotateY(3deg) translateZ(-100px);
+}
+
+.overlay:nth-of-type(3):hover ~ .lock,
+.overlay:nth-of-type(3):focus ~ .lock{
+    transform-origin: left bottom;
+    transform: translateY(3px) translateX(-5px) rotateX(-13deg) rotateY(3deg) rotateZ(-2deg) translateZ() scale(.96);
+}
+
+.overlay:nth-of-type(3):hover ~ .bg-403,
+.overlay:nth-of-type(3):focus ~ .bg-403{
+    transform: translateX(-23%)  rotateX(-13deg) rotateY(3deg) translateZ(-100px);
+}
+
+.overlay:nth-of-type(4):hover ~ .lock,
+.overlay:nth-of-type(4):focus ~ .lock{
+    transform-origin: right bottom;
+    transform: translateY(3px) translateX(5px) rotateX(-13deg) rotateY(-3deg) rotateZ(2deg) translateZ(0) scale(.89);
+}
+
+.overlay:nth-of-type(4):hover ~ .bg-403,
+.overlay:nth-of-type(4):focus ~ .bg-403{
+    transform: translateX(-19%) rotateX(-13deg) rotateY(-3deg) translateZ(-100px);
 }

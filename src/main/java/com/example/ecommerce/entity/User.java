@@ -49,12 +49,6 @@ public class User {
     @Nationalized
     private String img;
 
-    @JsonIgnore
-    private String password = null;
-
-    @ManyToOne
-    @JoinColumn(name = "id_chuc_vu")
-    private ChucVu chucVu;
 
 }
 
