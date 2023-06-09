@@ -31,7 +31,7 @@ public class SercurityConfig {
                 .cors().and().csrf().disable().authorizeHttpRequests()
                 .requestMatchers("/api/user/**").permitAll()
                 .requestMatchers("/403", "/login-page", "/oauth2/**", "/profile", "/contact").permitAll()
-                .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
+                .requestMatchers("/api/admin/**").permitAll()
                 .requestMatchers("/static/**").permitAll()
                 .and()
                 .oauth2Login()
