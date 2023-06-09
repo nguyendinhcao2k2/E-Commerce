@@ -3,7 +3,6 @@ package com.example.ecommerce.config;
 import com.example.ecommerce.sercurity.CustomOAuth2User;
 import com.example.ecommerce.sercurity.CustomOAuth2UserService;
 import com.example.ecommerce.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,15 +24,13 @@ public class SercurityConfig {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private HttpSession session;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors().and().csrf().disable().authorizeHttpRequests()
                 .requestMatchers("/api/user/**").permitAll()
-                .requestMatchers("/403", "/login-page", "/oauth2/**","/profile").permitAll()
+                .requestMatchers("/403", "/login-page", "/oauth2/**", "/profile", "/contact").permitAll()
                 .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
                 .requestMatchers("/static/**").permitAll()
                 .and()
@@ -47,7 +44,6 @@ public class SercurityConfig {
                 .successHandler((request, response, authentication) -> {
                     CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
                     userService.processOAuthPostLogin(oauthUser);
-                    session.setAttribute("info", oauthUser);
                     response.sendRedirect("/api/user/home");
                 })
                 .failureHandler((request, response, exception) -> {

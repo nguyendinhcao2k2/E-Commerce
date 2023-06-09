@@ -4,6 +4,7 @@ import com.example.ecommerce.entity.User;
 import com.example.ecommerce.repository.UserRepository;
 import com.example.ecommerce.sercurity.CustomOAuth2User;
 import com.example.ecommerce.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private HttpSession session;
+
     @Override
     public void processOAuthPostLogin(CustomOAuth2User customOAuth2User) {
         User existUser = userRepository.getUserByUsername(customOAuth2User.getEmail());
@@ -26,7 +30,11 @@ public class UserServiceImpl implements UserService {
             newUser.setImg(customOAuth2User.getPicture());
             newUser.setMa(getMaxMaUser());
             userRepository.save(newUser);
+            session.setAttribute("info", newUser);
+        } else {
+            session.setAttribute("info", existUser);
         }
+
     }
 
     @Override

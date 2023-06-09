@@ -1,6 +1,6 @@
 package com.example.ecommerce.controller;
 
-import com.example.ecommerce.sercurity.CustomOAuth2User;
+import com.example.ecommerce.entity.User;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,8 +23,8 @@ public class AuthenController {
 
     @GetMapping("/login-page")
     public String login() {
-        CustomOAuth2User oauth2 = (CustomOAuth2User) session.getAttribute("info");
-        if(oauth2 != null){
+        User user = (User) session.getAttribute("info");
+        if (user != null) {
             return "redirect:/api/user/home";
         }
         return "login";
@@ -32,7 +32,16 @@ public class AuthenController {
 
     @GetMapping("/profile")
     public String getProfile() {
+        User user = (User) session.getAttribute("info");
+        if (user == null) {
+            return "redirect:/api/user/home";
+        }
         return "profile";
+    }
+
+    @GetMapping("/contact")
+    public String getContact() {
+        return "contact";
     }
 
 }

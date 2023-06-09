@@ -35,8 +35,6 @@ public class CartRestController {
     @Autowired
     private ChiTietSanPhamRepository chiTietSanPhamRepository;
     @Autowired
-    private GioHangChiTietService gioHangChiTietService;
-    @Autowired
     private GioHangService gioHangService;
 
     @PostMapping("/add-to-cart")

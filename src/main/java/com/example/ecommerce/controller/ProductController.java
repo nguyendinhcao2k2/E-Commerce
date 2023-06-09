@@ -74,26 +74,7 @@ public class ProductController {
         model.addAttribute("detailProducts", sanPhamResponse);
         model.addAttribute("prColor", productColorService.getAllByCtspID(id));
         model.addAttribute("prSize", productSizeService.getAllByCtspID(id));
-        addArrivedProduct(sanPhamResponse);
         return "detail";
     }
 
-
-    public void addArrivedProduct(SanPhamResponse sanPhamResponse) {
-        List<SanPhamResponse> sanPhamResponses = (List<SanPhamResponse>) session.getAttribute("arrivedCart");
-        if (sanPhamResponses == null) {
-            sanPhamResponses = new ArrayList<>();
-            sanPhamResponses.add(sanPhamResponse);
-            session.setAttribute("arrivedCart", sanPhamResponses);
-        } else {
-            for (int i = 0; i < sanPhamResponses.size(); i++) {
-                if (!sanPhamResponses.get(i).getId().equals(sanPhamResponse.getId())) {
-                    sanPhamResponses.add(sanPhamResponse);
-                    if (sanPhamResponses.size() > 8) {
-                        sanPhamResponses.remove(8);
-                    }
-                }
-            }
-        }
-    }
 }
