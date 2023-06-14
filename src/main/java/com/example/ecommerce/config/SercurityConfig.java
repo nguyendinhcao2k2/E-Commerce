@@ -1,14 +1,23 @@
 package com.example.ecommerce.config;
 
+import com.example.ecommerce.sercurity.CustomAdminDetails;
 import com.example.ecommerce.sercurity.CustomOAuth2User;
 import com.example.ecommerce.sercurity.CustomOAuth2UserService;
 import com.example.ecommerce.service.UserService;
+import com.example.ecommerce.service.impl.AdminService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
@@ -20,10 +29,31 @@ public class SercurityConfig {
 
     @Autowired
     private CustomOAuth2UserService oauthUserService;
-
     @Autowired
     private UserService userService;
 
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new AdminService();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -31,8 +61,18 @@ public class SercurityConfig {
                 .cors().and().csrf().disable().authorizeHttpRequests()
                 .requestMatchers("/api/user/**").permitAll()
                 .requestMatchers("/403", "/login-page", "/oauth2/**", "/profile", "/contact").permitAll()
-                .requestMatchers("/api/admin/**").permitAll()
+                .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers("/static/**").permitAll()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .successHandler((request, response, authentication) -> {
+                    CustomAdminDetails customAdminDetails = (CustomAdminDetails) authentication.getPrincipal();
+                    HttpSession session = request.getSession();
+                    session.setAttribute("admin", customAdminDetails);
+                    response.sendRedirect("/api/admin/home");
+                })
+                .failureUrl("/login-page?error=true")
                 .and()
                 .oauth2Login()
                 .redirectionEndpoint()
@@ -52,18 +92,15 @@ public class SercurityConfig {
                 }).and()
                 .logout().logoutUrl("/logout")
                 .logoutSuccessUrl("/api/user/home").permitAll()
-                .invalidateHttpSession(true).and()
+                .invalidateHttpSession(true)
+                .and()
                 .exceptionHandling().accessDeniedPage("/403")
                 .authenticationEntryPoint((request, response, authException) -> {
-                    response.sendRedirect("http://localhost:8080/api/user/home");
+                    response.sendRedirect("http://localhost:8080/login-page");
                 });
 
         return http.build();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/images/**", "/js/**", "/css/**");
-    }
 
 }

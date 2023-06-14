@@ -1,6 +1,7 @@
 package com.example.ecommerce.controller;
 
 import com.example.ecommerce.entity.User;
+import com.example.ecommerce.sercurity.CustomAdminDetails;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,8 +25,11 @@ public class AuthenController {
     @GetMapping("/login-page")
     public String login() {
         User user = (User) session.getAttribute("info");
+        CustomAdminDetails customAdminDetails = (CustomAdminDetails) session.getAttribute("admin");
         if (user != null) {
             return "redirect:/api/user/home";
+        } else if (customAdminDetails != null) {
+            return "redirect:/api/admin/home";
         }
         return "login";
     }

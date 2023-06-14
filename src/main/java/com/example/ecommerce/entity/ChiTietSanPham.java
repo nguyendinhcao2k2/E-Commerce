@@ -13,6 +13,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +24,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Nationalized;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,7 +62,7 @@ public class ChiTietSanPham {
     private Season season;
 
 
-    @Column(name = "mo_ta", nullable = false)
+    @Column(name = "mo_ta", nullable = false, length = 2500)
     @Nationalized
     private String moTa;
 
@@ -72,6 +75,10 @@ public class ChiTietSanPham {
 
     @Column(name = "gia_ban")
     private BigDecimal giaBan;
+
+    @Column(name = "created_date")
+    @Temporal(TemporalType.DATE)
+    private Date createdDate;
 
     @Enumerated(EnumType.STRING)
     private TypeStatus typeStatus;

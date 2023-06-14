@@ -1,8 +1,10 @@
 package com.example.ecommerce.service;
 
+import com.example.ecommerce.model.request.ProductRequest;
 import com.example.ecommerce.model.response.SanPhamResponse;
-import org.springframework.data.repository.query.Param;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,5 +23,14 @@ public interface ChiTietSanPhamService {
 
     List<SanPhamResponse> searchByName(String tenSP);
 
+    Integer countAllProduct();
+
+    List<SanPhamResponse> getTop5();
+
+    boolean saveProduct(ProductRequest productRequest, MultipartFile file) throws IOException;
+
+    boolean updateProduct(String id,ProductRequest productRequest, MultipartFile file) throws IOException;
+
+    boolean deleteProduct(String id) throws IOException;
 
 }

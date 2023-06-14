@@ -11,7 +11,6 @@ import com.example.ecommerce.entity.ProductColor;
 import com.example.ecommerce.entity.ProductSize;
 import com.example.ecommerce.entity.Season;
 import com.example.ecommerce.entity.Size;
-import com.example.ecommerce.entity.User;
 import com.example.ecommerce.infrastructures.constants.TypeSize;
 import com.example.ecommerce.infrastructures.constants.TypeStatus;
 import com.example.ecommerce.repository.AdminRepository;
@@ -33,6 +32,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 
 /**
@@ -73,9 +73,9 @@ public class DBGenerator implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         //Gen Chức Vụ
-        ChucVu chucVu = new ChucVu(null, "CV001", "User");
+        ChucVu chucVu = new ChucVu(null, "CV001", "USER");
         chucVuRepository.save(chucVu);
-        ChucVu chucVu1 = new ChucVu(null, "CV002", "Admin");
+        ChucVu chucVu1 = new ChucVu(null, "CV002", "ADMIN");
         chucVuRepository.save(chucVu1);
 
         //Gen Size
@@ -147,17 +147,17 @@ public class DBGenerator implements CommandLineRunner {
 
 
         //Gen ChiTiet San Pham
-        ChiTietSanPham chiTietSanPham = new ChiTietSanPham(null, "Áo Polo Exmate Pro", nhaSanXuat, category2, season, "Chất Liệu Vải Được làm bằng Cotton mát mẻ không bị ngứa", "/ao/ao_polo.webp", 200, BigDecimal.valueOf(300), TypeStatus.AVAILABLE);
+        ChiTietSanPham chiTietSanPham = new ChiTietSanPham(null, "Áo Polo Exmate Pro", nhaSanXuat, category2, season, "Chất Liệu Vải Được làm bằng Cotton mát mẻ không bị ngứa", "/ao/ao_polo.webp", 200, BigDecimal.valueOf(300), new Date(), TypeStatus.AVAILABLE);
         chiTietSanPhamRepository.save(chiTietSanPham);
-        ChiTietSanPham chiTietSanPham11 = new ChiTietSanPham(null, "Áo chống nắng Promier", nhaSanXuat, category2, season2, "Chất Liệu Vải Được làm bằng từ vải dù giúp người mặc cảm thấy không nóng cũng như không lạnh vào tiết trời dịu êm", "/ao/ao_unisex.webp", 200, BigDecimal.valueOf(400), TypeStatus.AVAILABLE);
+        ChiTietSanPham chiTietSanPham11 = new ChiTietSanPham(null, "Áo chống nắng Promier", nhaSanXuat, category2, season2, "Chất Liệu Vải Được làm bằng từ vải dù giúp người mặc cảm thấy không nóng cũng như không lạnh vào tiết trời dịu êm", "/ao/ao_unisex.webp", 200, BigDecimal.valueOf(400), new Date(), TypeStatus.AVAILABLE);
         chiTietSanPhamRepository.save(chiTietSanPham11);
-        ChiTietSanPham chiTietSanPham1 = new ChiTietSanPham(null, "Quần Jean Xanh Ngọc", nhaSanXuat, category, season4, "Chất Liệu Vải Được làm bằng diều gió mát mẻ không bị ngứa", "/quan/quan_jean.webp", 200, BigDecimal.valueOf(150), TypeStatus.AVAILABLE);
+        ChiTietSanPham chiTietSanPham1 = new ChiTietSanPham(null, "Quần Jean Xanh Ngọc", nhaSanXuat, category, season4, "Chất Liệu Vải Được làm bằng diều gió mát mẻ không bị ngứa", "/quan/quan_jean.webp", 200, BigDecimal.valueOf(150), new Date(), TypeStatus.AVAILABLE);
         chiTietSanPhamRepository.save(chiTietSanPham1);
-        ChiTietSanPham chiTietSanPham12 = new ChiTietSanPham(null, "Quần đùi thoáng mát Exmate", nhaSanXuat, category, season, "Chất liệu được làm từ vải Cotton siêu thoáng mát thấm hút mồ hôi siêu đỉnh", "/quan/quan_vip_pro.webp", 200, BigDecimal.valueOf(150), TypeStatus.AVAILABLE);
+        ChiTietSanPham chiTietSanPham12 = new ChiTietSanPham(null, "Quần đùi thoáng mát Exmate", nhaSanXuat, category, season, "Chất liệu được làm từ vải Cotton siêu thoáng mát thấm hút mồ hôi siêu đỉnh", "/quan/quan_vip_pro.webp", 200, BigDecimal.valueOf(150), new Date(), TypeStatus.AVAILABLE);
         chiTietSanPhamRepository.save(chiTietSanPham12);
-        ChiTietSanPham chiTietSanPham2 = new ChiTietSanPham(null, "Giày đẹp cho nam và nữ", nhaSanXuat, category3, season3, "Giày được làm bằng vải tơ tằm được dệt cách đây 300 năm,thuộc hàng cao cấp và hiếm nhất", "/giay/giay_cho_nam_nu.jpg", 200, BigDecimal.valueOf(400), TypeStatus.AVAILABLE);
+        ChiTietSanPham chiTietSanPham2 = new ChiTietSanPham(null, "Giày đẹp cho nam và nữ", nhaSanXuat, category3, season3, "Giày được làm bằng vải tơ tằm được dệt cách đây 300 năm,thuộc hàng cao cấp và hiếm nhất", "/giay/giay_cho_nam_nu.jpg", 200, BigDecimal.valueOf(400), new Date(), TypeStatus.AVAILABLE);
         chiTietSanPhamRepository.save(chiTietSanPham2);
-        ChiTietSanPham chiTietSanPham22 = new ChiTietSanPham(null, "Giày đẹp cho nam Exmate Cool", nhaSanXuat, category3, season4, "Giày được làm bằng vải lụa thời coogggo từ 2000 năm trước", "/giay/giay_cho_nam.webp", 200, BigDecimal.valueOf(900), TypeStatus.AVAILABLE);
+        ChiTietSanPham chiTietSanPham22 = new ChiTietSanPham(null, "Giày đẹp cho nam Exmate Cool", nhaSanXuat, category3, season4, "Giày được làm bằng vải lụa thời coogggo từ 2000 năm trước", "/giay/giay_cho_nam.webp", 200, BigDecimal.valueOf(900), new Date(), TypeStatus.AVAILABLE);
         chiTietSanPhamRepository.save(chiTietSanPham22);
 
         //Gen ProductColor
@@ -169,7 +169,7 @@ public class DBGenerator implements CommandLineRunner {
         productColorRepository.save(productColor3);
         ProductColor productColor4 = new ProductColor(null, chiTietSanPham, mauSac3);
         productColorRepository.save(productColor4);
-        ProductColor productColor5 = new ProductColor(null,chiTietSanPham,mauSac4);
+        ProductColor productColor5 = new ProductColor(null, chiTietSanPham, mauSac4);
         productColorRepository.save(productColor5);
 
         ProductColor productColor6 = new ProductColor(null, chiTietSanPham11, mauSac);
@@ -180,7 +180,7 @@ public class DBGenerator implements CommandLineRunner {
         productColorRepository.save(productColor8);
         ProductColor productColor9 = new ProductColor(null, chiTietSanPham11, mauSac3);
         productColorRepository.save(productColor9);
-        ProductColor productColor10 = new ProductColor(null,chiTietSanPham11,mauSac4);
+        ProductColor productColor10 = new ProductColor(null, chiTietSanPham11, mauSac4);
         productColorRepository.save(productColor10);
 
         ProductColor productColor11 = new ProductColor(null, chiTietSanPham1, mauSac);
@@ -191,7 +191,7 @@ public class DBGenerator implements CommandLineRunner {
         productColorRepository.save(productColor13);
         ProductColor productColor14 = new ProductColor(null, chiTietSanPham1, mauSac3);
         productColorRepository.save(productColor14);
-        ProductColor productColor15 = new ProductColor(null,chiTietSanPham1,mauSac4);
+        ProductColor productColor15 = new ProductColor(null, chiTietSanPham1, mauSac4);
         productColorRepository.save(productColor15);
 
         ProductColor productColor16 = new ProductColor(null, chiTietSanPham12, mauSac);
@@ -202,7 +202,7 @@ public class DBGenerator implements CommandLineRunner {
         productColorRepository.save(productColor18);
         ProductColor productColor19 = new ProductColor(null, chiTietSanPham12, mauSac3);
         productColorRepository.save(productColor19);
-        ProductColor productColor20 = new ProductColor(null,chiTietSanPham12,mauSac4);
+        ProductColor productColor20 = new ProductColor(null, chiTietSanPham12, mauSac4);
         productColorRepository.save(productColor20);
 
         ProductColor productColor21 = new ProductColor(null, chiTietSanPham2, mauSac);
@@ -213,7 +213,7 @@ public class DBGenerator implements CommandLineRunner {
         productColorRepository.save(productColor23);
         ProductColor productColor24 = new ProductColor(null, chiTietSanPham2, mauSac3);
         productColorRepository.save(productColor24);
-        ProductColor productColor25 = new ProductColor(null,chiTietSanPham2,mauSac4);
+        ProductColor productColor25 = new ProductColor(null, chiTietSanPham2, mauSac4);
         productColorRepository.save(productColor25);
 
         ProductColor productColor26 = new ProductColor(null, chiTietSanPham22, mauSac);
@@ -224,7 +224,7 @@ public class DBGenerator implements CommandLineRunner {
         productColorRepository.save(productColor28);
         ProductColor productColor29 = new ProductColor(null, chiTietSanPham22, mauSac3);
         productColorRepository.save(productColor29);
-        ProductColor productColor30 = new ProductColor(null,chiTietSanPham22,mauSac4);
+        ProductColor productColor30 = new ProductColor(null, chiTietSanPham22, mauSac4);
         productColorRepository.save(productColor30);
 
         //Gen ProductSize

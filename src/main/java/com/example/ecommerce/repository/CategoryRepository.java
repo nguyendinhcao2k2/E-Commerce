@@ -10,7 +10,10 @@ import java.util.List;
 /**
  * @author caodinh
  */
-public interface CategoryRepository extends JpaRepository<Category,String> {
+public interface CategoryRepository extends JpaRepository<Category, String> {
     @Query("select new com.example.ecommerce.model.response.CategoryResponse(ctsp.category.id,ctsp.category.ten,ctsp.category.img,count (ctsp.id)) from ChiTietSanPham as ctsp group by ctsp.category.id")
     List<CategoryResponse> getAllCategory();
+
+    @Query("select count(ct.id) from Category ct")
+    Integer countCategory();
 }

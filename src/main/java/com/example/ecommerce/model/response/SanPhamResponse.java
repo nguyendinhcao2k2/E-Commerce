@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @author caodinh
@@ -22,6 +23,8 @@ public class SanPhamResponse {
     private String tenSP;
     private String img;
     private BigDecimal giaBan;
+    private Date createdDate;
+    private int amount;
     private String moTa;
 
 }

@@ -24,13 +24,16 @@
         </form>
     </div>
     <div class="form-container sign-in-container">
-        <form action="#">
+        <form th:action="@{/login}" method="post">
             <h1>Admin Login</h1>
             <span>login to continue</span>
-            <input type="text" placeholder="Username"/>
-            <input type="password" placeholder="Password"/>
+            <input type="text" th:name="username" placeholder="Username"/>
+            <input type="password" th:name="password" placeholder="Password"/>
+            <div th:if="${param.error}">
+                <span style="color: red">Invalid User or Password</span>
+            </div>
             <a th:href="@{api/user/home}">Back To Home</a>
-            <button>Sign In</button>
+            <button type="submit">Sign In</button>
         </form>
     </div>
     <div class="overlay-container">
