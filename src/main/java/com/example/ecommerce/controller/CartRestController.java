@@ -4,9 +4,7 @@ import com.example.ecommerce.entity.ChiTietSanPham;
 import com.example.ecommerce.entity.GioHang;
 import com.example.ecommerce.entity.GioHangChiTiet;
 import com.example.ecommerce.model.response.CartInfoResponse;
-import com.example.ecommerce.model.response.ResponseObject;
 import com.example.ecommerce.repository.ChiTietSanPhamRepository;
-import com.example.ecommerce.service.GioHangChiTietService;
 import com.example.ecommerce.service.GioHangService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,16 +138,18 @@ public class CartRestController {
     }
 
     @PostMapping("/check-out-cart")
-    public ResponseObject saveCart(@RequestBody CartInfoResponse cartInfoResponse, HttpSession session) {
+    public ResponseEntity<String> saveCart(@RequestBody CartInfoResponse cartInfoResponse, HttpSession session) {
         GioHang gioHang = (GioHang) session.getAttribute("carts");
         if (gioHang != null) {
-            System.err.println("ok");
+            System.out.println(cartInfoResponse.toString());
             gioHangService.addToCart(gioHang, cartInfoResponse);
-            session.removeAttribute("carts");
-            return new ResponseObject("Ok");
+            GioHang newGH = new GioHang();
+            newGH.setChiTietGioHang(new ArrayList<>());
+            session.setAttribute("carts", newGH);
+            return new ResponseEntity<>("Check out Success", HttpStatus.OK);
         } else {
             System.err.println("error");
-            return new ResponseObject(null);
+            return new ResponseEntity<>("Something went wrong", HttpStatus.BAD_REQUEST);
         }
     }
 }

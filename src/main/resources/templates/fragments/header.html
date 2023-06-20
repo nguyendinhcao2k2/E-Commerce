@@ -41,6 +41,8 @@
                 <i class="fas fa-shopping-cart text-primary"></i>
                 <span th:if="${session.carts != null}" class="badge"
                       th:text="${session.carts.chiTietGioHang.size()}"></span>
+                <span th:if="${session.carts == null}" class="badge"
+                      th:text="h1"></span>
             </a>
         </div>
     </div>
@@ -81,7 +83,8 @@
                         <a th:href="@{/contact}" class="nav-item nav-link">Contact</a>
                     </div>
                     <div class="navbar-nav ml-auto py-0">
-                        <a th:if="${session.info == null and session.admin == null}" th:href="@{/login-page}" class="nav-item nav-link">Login</a>
+                        <a th:if="${session.info == null and session.admin == null}" th:href="@{/login-page}"
+                           class="nav-item nav-link">Login</a>
                         <a th:if="${session.info != null}" th:href="@{/profile}" class="nav-item nav-link"> Hello: <span
                                 th:text="${session.info.hoTen}"></span></a>
                         <a th:if="${session.info != null}" th:href="@{/logout}" class="nav-item nav-link">Logout</a>

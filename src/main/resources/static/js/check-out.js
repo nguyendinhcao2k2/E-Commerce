@@ -67,6 +67,7 @@ function checkOut() {
         errorPhoneNumber.text("Please enter your phone number");
         check = false;
     } else if (!validatePhoneNumber(phoneNumber)) {
+        alert("Not OK")
         errorPhoneNumber.text("Please enter valid phone number");
         check = false;
     } else {
@@ -87,10 +88,9 @@ function checkOut() {
             contentType: "application/json",
             url: viewUrl + "/check-out-cart",
             data: JSON.stringify(cartInfo),
-            dataType: "json",
             success: function (response) {
-                alert(response.data);
-                window.location.href = "/api/user/home"
+                alert(response)
+                window.location.href = "/api/user/products"
             },
             error: function (e) {
                 alert("Error")
@@ -107,10 +107,7 @@ function validateEmail(email) {
 }
 
 function validatePhoneNumber(phoneNumber) {
-    // Loại bỏ các ký tự không phải số
-    let cleanedPhoneNumber = phoneNumber.replace(/\D/g, '');
+    var regex = /^0\d{9}$/; // Kiểm tra xem số điện thoại có bắt đầu bằng số 0, sau đó là 9 chữ số khác hay không
 
-    // Kiểm tra độ dài số điện thoại và định dạng
-    let phoneNumberRegex = /^0\d{9}$/;
-    return phoneNumberRegex.test(cleanedPhoneNumber);
+    return regex.test(phoneNumber);
 }

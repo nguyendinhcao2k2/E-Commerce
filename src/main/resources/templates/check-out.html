@@ -74,83 +74,67 @@
         </div>
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">Billing address</h4>
-            <form>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="firstName">First name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
-                        <span class="validate-text" id="error_first_name"></span>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="firstName">First name</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                    <span class="validate-text" id="error_first_name"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="lastName">Last name</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+                    <span class="validate-text" id="error_last_name"></span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="email">Email</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@</span>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="lastName">Last name</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
-                        <span class="validate-text" id="error_last_name"></span>
+                    <input type="email" class="form-control" id="email" placeholder="abc123@gmail.com" required="">
+                    <span class="validate-text" id="error_email" style="width: 100%;"> </span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="">
+                <span class="validate-text" id="error_address" style="width: 100%;"> </span>
+            </div>
+            <div class="mb-3">
+                <label for="phoneNumber">Phone number</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
                     </div>
+                    <input type="text" class="form-control" id="phoneNumber" placeholder="0943232913" required="">
+                    <span class="validate-text" id="error_phone_number" style="width: 100%;"> </span>
                 </div>
-                <div class="mb-3">
-                    <label for="email">Email</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">@</span>
-                        </div>
-                        <input type="email" class="form-control" id="email" placeholder="abc123@gmail.com" required="">
-                        <span class="validate-text" id="error_email" style="width: 100%;"> </span>
-                    </div>
+            </div>
+            <div class="mb-3">
+                <label for="note">Note: <span class="text-muted">(Optional)</span></label>
+                <textarea style="height: 150px" type="text" class="form-control" id="note"
+                          placeholder="Note what you want to tell me"></textarea>
+            </div>
+            <hr class="mb-4">
+            <h4 class="mb-3">Payment</h4>
+            <div class="d-block my-3">
+                <div class="custom-control custom-radio">
+                    <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked=""
+                           required="">
+                    <label class="custom-control-label" for="credit">Cash on Delivery - COD</label>
                 </div>
-                <div class="mb-3">
-                    <label for="address">Address</label>
-                    <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="">
-                    <span class="validate-text" id="error_address" style="width: 100%;"> </span>
+                <div class="custom-control custom-radio">
+                    <input id="debit" name="paymentMethod" type="radio" class="custom-control-input"
+                           required="">
+                    <label class="custom-control-label" for="debit">Vn Pay</label>
                 </div>
-                <div class="mb-3">
-                    <label for="phoneNumber">Phone number</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                        </div>
-                        <input type="text" class="form-control" id="phoneNumber" placeholder="0943232913" required="">
-                        <span class="validate-text" id="error_phone_number" style="width: 100%;"> </span>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label for="note">Note: <span class="text-muted">(Optional)</span></label>
-                    <textarea style="height: 150px" type="text" class="form-control" id="note"
-                              placeholder="Note what you want to tell me"></textarea>
-                </div>
-                <hr class="mb-4">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="same-address">
-                    <label class="custom-control-label" for="same-address">Shipping address is the same as my billing
-                        address</label>
-                </div>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="save-info">
-                    <label class="custom-control-label" for="save-info">Save this information for next time</label>
-                </div>
-                <hr class="mb-4">
-                <h4 class="mb-3">Payment</h4>
-                <div class="d-block my-3">
-                    <div class="custom-control custom-radio">
-                        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked=""
-                               required="">
-                        <label class="custom-control-label" for="credit">Cash on Delivery - COD</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" disabled
-                               required="">
-                        <label class="custom-control-label" for="debit">Debit card</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" disabled
-                               required="">
-                        <label class="custom-control-label" for="paypal">PayPal</label>
-                    </div>
-                </div>
-                <hr class="mb-4">
-                <button onclick="checkOut()" class="btn btn-primary btn-lg btn-block" type="submit">Continue to
-                    checkout
-                </button>
-            </form>
+            </div>
+            <hr class="mb-4">
+            <button th:attr="onclick=|checkOut()|" class="btn btn-primary btn-lg btn-block" type="submit">Continue
+                to
+                checkout
+            </button>
         </div>
     </div>
 </div>

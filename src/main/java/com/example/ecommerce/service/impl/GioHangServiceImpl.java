@@ -2,12 +2,14 @@ package com.example.ecommerce.service.impl;
 
 import com.example.ecommerce.entity.GioHang;
 import com.example.ecommerce.entity.HoaDon;
+import com.example.ecommerce.entity.User;
 import com.example.ecommerce.infrastructures.constants.TypeHoaDon;
 import com.example.ecommerce.model.response.CartInfoResponse;
 import com.example.ecommerce.repository.GioHangRepository;
 import com.example.ecommerce.repository.HoaDonRepository;
 import com.example.ecommerce.service.GioHangService;
 import com.example.ecommerce.service.HoaDonService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,9 @@ public class GioHangServiceImpl implements GioHangService {
 
     @Autowired
     private HoaDonRepository hoaDonRepository;
+
+    @Autowired
+    private HttpSession httpSession;
 
     @Override
     public String getMaxMaGioHang() {
@@ -64,6 +69,7 @@ public class GioHangServiceImpl implements GioHangService {
         hoaDon.setTinhTrang(TypeHoaDon.PROCESSING.toString());
         hoaDon.setNgayTao(new Date());
         gioHang.setHoaDon(hoaDonRepository.save(hoaDon));
+
         gioHangRepository.save(gioHang);
     }
 
