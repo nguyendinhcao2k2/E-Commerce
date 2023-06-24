@@ -8,6 +8,8 @@ import com.example.ecommerce.model.request.ProductRequest;
 import com.example.ecommerce.model.response.SanPhamResponse;
 import com.example.ecommerce.repository.CategoryRepository;
 import com.example.ecommerce.repository.ChiTietSanPhamRepository;
+import com.example.ecommerce.repository.ProductColorRepository;
+import com.example.ecommerce.repository.ProductSizeRepository;
 import com.example.ecommerce.repository.SeasonRepository;
 import com.example.ecommerce.service.ChiTietSanPhamService;
 import com.example.ecommerce.util.ImageUtil;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -37,6 +40,12 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
 
     @Autowired
     private SeasonRepository seasonRepository;
+
+    @Autowired
+    private ProductSizeRepository productSizeRepository;
+
+    @Autowired
+    private ProductColorRepository productColorRepository;
 
     @Override
     public List<SanPhamResponse> getAllSanPham() {
@@ -79,12 +88,12 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     }
 
     @Override
-    public boolean saveProduct(ProductRequest productRequest, MultipartFile file) throws IOException {
+    public ChiTietSanPham saveProduct(ProductRequest productRequest, MultipartFile file) throws IOException {
         Optional<Category> category = categoryRepository.findById(productRequest.getCategory());
         Optional<Season> season = seasonRepository.findById(productRequest.getSeason());
 
         if (!category.isPresent() || !season.isPresent()) {
-            return false;
+            return null;
         }
         String path = "";
         String savePath = "";
@@ -101,14 +110,11 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
 
         String image = ImageUtil.saveImage(file, path);
         if (image == null) {
-            return false;
+            return null;
         }
 
         ChiTietSanPham chiTietSanPham = new ChiTietSanPham(null, productRequest.getTenSP(), null, category.get(), season.get(), productRequest.getDescription(), savePath + image, productRequest.getAmount(), BigDecimal.valueOf(productRequest.getPrice()), new Date(), TypeStatus.AVAILABLE);
-        if (chiTietSanPhamRepository.save(chiTietSanPham) == null) {
-            return false;
-        }
-        return true;
+        return chiTietSanPhamRepository.save(chiTietSanPham);
     }
 
     @Override
@@ -161,12 +167,15 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     }
 
     @Override
+    @Transactional
     public boolean deleteProduct(String id) throws IOException {
         Optional<ChiTietSanPham> chiTietSanPham = chiTietSanPhamRepository.findById(id);
         if (!chiTietSanPham.isPresent()) {
             return false;
         }
         if (ImageUtil.deleteImage(chiTietSanPham.get().getImg())) {
+            productSizeRepository.deleteByCtspId(id);
+            productColorRepository.deleteByProductId(id);
             chiTietSanPhamRepository.deleteById(id);
             return true;
         }

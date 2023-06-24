@@ -5,6 +5,7 @@ import com.example.ecommerce.entity.HoaDon;
 import com.example.ecommerce.entity.User;
 import com.example.ecommerce.infrastructures.constants.TypeHoaDon;
 import com.example.ecommerce.model.response.CartInfoResponse;
+import com.example.ecommerce.model.response.HoaDonResponse;
 import com.example.ecommerce.repository.GioHangRepository;
 import com.example.ecommerce.repository.HoaDonRepository;
 import com.example.ecommerce.service.GioHangService;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author caodinh
@@ -71,6 +73,11 @@ public class GioHangServiceImpl implements GioHangService {
         gioHang.setHoaDon(hoaDonRepository.save(hoaDon));
 
         gioHangRepository.save(gioHang);
+    }
+
+    @Override
+    public List<HoaDonResponse> getHoaDonByTrangThai() {
+        return gioHangRepository.getHoaDonByTrangThai();
     }
 
 

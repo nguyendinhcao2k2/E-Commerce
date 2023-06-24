@@ -46,7 +46,7 @@ public class CartRestController {
     }
 
     @PutMapping("/update-amount-cart")
-    public ResponseEntity<?> minuseAmountCart(HttpSession session,
+    public ResponseEntity<?> updateAmountCart(HttpSession session,
                                               @RequestParam("color") String color,
                                               @RequestParam("size") String size,
                                               @RequestParam("amount") int amount,
@@ -137,19 +137,4 @@ public class CartRestController {
         }
     }
 
-    @PostMapping("/check-out-cart")
-    public ResponseEntity<String> saveCart(@RequestBody CartInfoResponse cartInfoResponse, HttpSession session) {
-        GioHang gioHang = (GioHang) session.getAttribute("carts");
-        if (gioHang != null) {
-            System.out.println(cartInfoResponse.toString());
-            gioHangService.addToCart(gioHang, cartInfoResponse);
-            GioHang newGH = new GioHang();
-            newGH.setChiTietGioHang(new ArrayList<>());
-            session.setAttribute("carts", newGH);
-            return new ResponseEntity<>("Check out Success", HttpStatus.OK);
-        } else {
-            System.err.println("error");
-            return new ResponseEntity<>("Something went wrong", HttpStatus.BAD_REQUEST);
-        }
-    }
 }

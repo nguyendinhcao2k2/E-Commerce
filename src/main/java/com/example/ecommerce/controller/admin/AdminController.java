@@ -2,9 +2,11 @@ package com.example.ecommerce.controller.admin;
 
 import com.example.ecommerce.service.CategoryService;
 import com.example.ecommerce.service.ChiTietSanPhamService;
+import com.example.ecommerce.service.GioHangService;
+import com.example.ecommerce.service.MauSacService;
 import com.example.ecommerce.service.SeasonService;
+import com.example.ecommerce.service.SizeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,12 +31,24 @@ public class AdminController {
     @Autowired
     private SeasonService seasonService;
 
+    @Autowired
+    private SizeService sizeService;
+
+    @Autowired
+    private MauSacService mauSacService;
+
+    @Autowired
+    private GioHangService gioHangService;
+
     @GetMapping("/home")
     public String home(Model model) throws IOException {
         model.addAttribute("amountProduct", chiTietSanPhamService.countAllProduct());
         model.addAttribute("amountCategory", categoryService.countCategory());
         model.addAttribute("categories", categoryService.getAllCategory());
         model.addAttribute("seasons", seasonService.getAllSeason());
+        model.addAttribute("shoeSize", sizeService.getByTypeShoe());
+        model.addAttribute("clothingSize", sizeService.getByTypeClothing());
+        model.addAttribute("mauSac", mauSacService.getMauSac());
         model.addAttribute("products", chiTietSanPhamService.getTop5());
         return "admin/index";
     }
@@ -54,8 +68,14 @@ public class AdminController {
     }
 
     @GetMapping("/profile")
-    public String getProfile(){
+    public String getProfile() {
         return "admin/profile";
+    }
+
+    @GetMapping("/hoa-don")
+    public String getHoaDon(Model model) {
+        model.addAttribute("hoaDon", gioHangService.getHoaDonByTrangThai());
+        return "admin/hoadon";
     }
 
 }

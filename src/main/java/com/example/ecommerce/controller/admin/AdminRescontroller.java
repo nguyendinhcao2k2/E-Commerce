@@ -1,13 +1,14 @@
 package com.example.ecommerce.controller.admin;
 
+import com.example.ecommerce.entity.ChiTietSanPham;
 import com.example.ecommerce.model.request.ProductRequest;
 import com.example.ecommerce.service.ChiTietSanPhamService;
+import com.example.ecommerce.service.ProductColorService;
+import com.example.ecommerce.service.ProductSizeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,10 +30,18 @@ public class AdminRescontroller {
     @Autowired
     private ChiTietSanPhamService chiTietSanPhamService;
 
+    @Autowired
+    private ProductSizeService productSizeService;
+
+    @Autowired
+    private ProductColorService productColorService;
 
     @PostMapping("/save-product")
     public ResponseEntity<String> saveProduct(@ModelAttribute ProductRequest productRequest, @RequestParam("image") MultipartFile image) throws IOException {
-        if (chiTietSanPhamService.saveProduct(productRequest, image)) {
+        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.saveProduct(productRequest, image);
+        if (chiTietSanPham != null) {
+            productSizeService.save(chiTietSanPham.getId(), productRequest.getShoeSize(), productRequest.getClothingSize());
+            productColorService.save(chiTietSanPham.getId(), productRequest.getColors());
             return ResponseEntity.ok("Save Data Success");
         }
         return new ResponseEntity<>("Something went wrong", HttpStatus.BAD_REQUEST);

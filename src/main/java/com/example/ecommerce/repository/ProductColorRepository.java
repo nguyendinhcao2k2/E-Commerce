@@ -4,6 +4,7 @@ import com.example.ecommerce.entity.ProductColor;
 import com.example.ecommerce.model.response.ProductColorResponse;
 import com.example.ecommerce.model.response.SanPhamResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -13,12 +14,12 @@ import java.util.List;
 /**
  * @author caodinh
  */
-public interface ProductColorRepository extends JpaRepository<ProductColor,String> {
+public interface ProductColorRepository extends JpaRepository<ProductColor, String> {
 
     @Query("select new com.example.ecommerce.model.response.ProductColorResponse(pc.mauSac.id,pc.mauSac.ten) from ProductColor pc where pc.chiTietSP.id = :id")
     List<ProductColorResponse> getAllByCtspID(@Param("id") String id);
 
-    @Query("SELECT new com.example.ecommerce.model.response.SanPhamResponse(pc.chiTietSP.id, pc.chiTietSP.tenSP, pc.chiTietSP.Img, pc.chiTietSP.giaBan, '') " +
+    @Query("SELECT new com.example.ecommerce.model.response.SanPhamResponse(pc.chiTietSP.id, pc.chiTietSP.tenSP, pc.chiTietSP.Img, pc.chiTietSP.giaBan,pc.chiTietSP.createdDate,pc.chiTietSP.soLuongTon, '') " +
             "FROM ProductColor pc " +
             "WHERE (:color IS NULL OR pc.mauSac.ten = :color) " +
             "AND (:minPrice IS NULL OR pc.chiTietSP.giaBan BETWEEN :minPrice AND :maxPrice) " +
@@ -28,5 +29,9 @@ public interface ProductColorRepository extends JpaRepository<ProductColor,Strin
                                         @Param("minPrice") BigDecimal minPrice,
                                         @Param("maxPrice") BigDecimal maxPrice,
                                         @Param("greaterThanPrice") BigDecimal greaterThanPrice);
+
+    @Modifying
+    @Query(value = "delete from ProductColor pc where pc.chiTietSP.id = :proId")
+    void deleteByProductId(@Param("proId") String id);
 
 }

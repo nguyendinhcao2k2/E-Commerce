@@ -55,7 +55,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white ">
-                <h4 claas="modal-title">Add Post</h4>
+                <h4 claas="modal-title">Add Product</h4>
                 <button class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body">
@@ -85,6 +85,28 @@
                         <select class="form-control" th:id="category">
                             <option th:each="ct : ${categories}" th:value="${ct.id}" th:text="${ct.ten}"></option>
                         </select>
+                    </div>
+                    <label for="category">Shoes Size</label>
+                    <div class="form-check">
+                        <input style="margin-left: 5px" th:each="sz : ${shoeSize}" th:name="shoesize" type="checkbox"
+                               th:value="${sz.id}" th:text="${sz.ten}">
+                        <br>
+                        <span style="color: red" th:id="error_shoezise"></span>
+                    </div>
+                    <label for="category">Clothing Size</label>
+                    <div class="form-check">
+                        <input style="margin-left: 5px" th:each="cz : ${clothingSize}" th:name="clothingsize"
+                               type="checkbox"
+                               th:value="${cz.id}" th:text="${cz.ten}">
+                        <br>
+                        <span style="color: red" th:id="error_clothingsize"></span>
+                    </div>
+                    <label for="category">Color</label>
+                    <div class="form-check">
+                        <input style="margin-left: 5px" th:each="ms : ${mauSac}" th:name="color" type="checkbox"
+                               th:value="${ms.id}" th:text="${ms.ten}">
+                        <br>
+                        <span style="color: red" th:id="error_color"></span>
                     </div>
                     <div class="form-group">
                         <label for="season">Season</label>

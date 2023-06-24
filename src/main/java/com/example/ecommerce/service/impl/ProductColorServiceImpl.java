@@ -1,14 +1,21 @@
 package com.example.ecommerce.service.impl;
 
+import com.example.ecommerce.entity.ChiTietSanPham;
+import com.example.ecommerce.entity.MauSac;
+import com.example.ecommerce.entity.ProductColor;
 import com.example.ecommerce.model.response.ProductColorResponse;
 import com.example.ecommerce.model.response.SanPhamResponse;
+import com.example.ecommerce.repository.ChiTietSanPhamRepository;
+import com.example.ecommerce.repository.MauSacRepository;
 import com.example.ecommerce.repository.ProductColorRepository;
 import com.example.ecommerce.service.ProductColorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author caodinh
@@ -18,6 +25,12 @@ public class ProductColorServiceImpl implements ProductColorService {
 
     @Autowired
     private ProductColorRepository productColorRepository;
+
+    @Autowired
+    private ChiTietSanPhamRepository chiTietSanPhamRepository;
+
+    @Autowired
+    private MauSacRepository mauSacRepository;
 
     @Override
     public List<ProductColorResponse> getAllByCtspID(String id) {
@@ -40,6 +53,21 @@ public class ProductColorServiceImpl implements ProductColorService {
             maxPrice = new BigDecimal(priceProducts[1]);
         }
         return productColorRepository.filterProduct(color, minPrice, maxPrice, greaterThanPrice);
+    }
+
+    @Override
+    public boolean save(String proId, List<String> listColors) {
+        List<ProductColor> productColors = new ArrayList<>();
+        Optional<ChiTietSanPham> chiTietSanPham = chiTietSanPhamRepository.findById(proId);
+        if (chiTietSanPham.isPresent()) {
+            List<MauSac> mauSacs = mauSacRepository.findAllById(listColors);
+            for (MauSac ms : mauSacs) {
+                productColors.add(new ProductColor(null, chiTietSanPham.get(), ms));
+            }
+            productColorRepository.saveAll(productColors);
+            return true;
+        }
+        return false;
     }
 
 }

@@ -1,6 +1,15 @@
 const viewUrl = "http://localhost:8080/api/admin";
 
 function saveProduct() {
+    let shoeSize = $('input[name="shoesize"]:checked').map(function () {
+        return $(this).val();
+    }).get();
+    let clothingSize = $('input[name="clothingsize"]:checked').map(function () {
+        return $(this).val();
+    }).get();
+    let colors = $('input[name="color"]:checked').map(function () {
+        return $(this).val();
+    }).get();
     // Lấy giá trị từ các trường dữ liệu
     let tenSP = document.getElementById("tenSP").value;
     let price = document.getElementById("price").value;
@@ -16,7 +25,9 @@ function saveProduct() {
     let error_amount = document.getElementById("error_amount");
     let error_image = document.getElementById("error_image");
     let error_description = document.getElementById("error_description");
-
+    let error_shoeSize = document.getElementById("error_shoezise");
+    let error_clothingSize = document.getElementById("error_clothingsize");
+    let error_color = document.getElementById("error_color");
 
     let check = true;
 
@@ -62,10 +73,32 @@ function saveProduct() {
 
     if (!image) {
         error_image.textContent = "Image không được để trống";
+        check = false;
     } else {
         error_image.textContent = "";
     }
 
+    if (shoeSize.length === 0 && clothingSize.length === 0) {
+        error_shoeSize.textContent = "Vui lòng chọn Shoe Size hoặc Clothing Size";
+        error_clothingSize.textContent = "Vui lòng chọn Shoe Size hoặc Clothing Size";
+        check = false;
+    } else {
+        error_shoeSize.textContent = "";
+        error_clothingSize.textContent = "";
+    }
+
+    if (shoeSize.length > 0 && clothingSize.length > 0) {
+        error_shoeSize.textContent = "Chỉ được chọn Shoes Size hoặc Clothing Size";
+        error_clothingSize.textContent = "Chỉ được chọn Shoes Size hoặc Clothing Size";
+        check = false;
+    }
+
+    if (colors.length === 0) {
+        error_color.textContent = "Vui lòng chon color"
+        check = false;
+    } else {
+        error_color.textContent = ""
+    }
     if (check) {
         let formData = new FormData();
         formData.append("tenSP", tenSP);
@@ -75,6 +108,9 @@ function saveProduct() {
         formData.append("category", category);
         formData.append("season", season);
         formData.append("description", description);
+        formData.append("shoeSize", shoeSize);
+        formData.append("clothingSize", clothingSize);
+        formData.append("colors", colors);
 
         $.ajax({
             type: "POST",

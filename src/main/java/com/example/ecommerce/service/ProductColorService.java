@@ -15,4 +15,6 @@ public interface ProductColorService {
 
     List<SanPhamResponse> filterProduct(String color, String price);
 
+    boolean save(String proId,List<String> listColors);
+
 }

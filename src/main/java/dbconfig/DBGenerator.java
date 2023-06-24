@@ -75,7 +75,7 @@ public class DBGenerator implements CommandLineRunner {
         //Gen Chức Vụ
         ChucVu chucVu = new ChucVu(null, "CV001", "USER");
         chucVuRepository.save(chucVu);
-        ChucVu chucVu1 = new ChucVu(null, "CV002", "ADMIN");
+        ChucVu chucVu1 = new ChucVu(null, "CV002", "ROLE_ADMIN");
         chucVuRepository.save(chucVu1);
 
         //Gen Size
@@ -296,7 +296,7 @@ public class DBGenerator implements CommandLineRunner {
 
 
         //Gen Admin
-        Admin admin = new Admin(null, "AM001", "Nam Dinh", "0943232913", "namdinh", "123456", chucVu1);
+        Admin admin = new Admin(null, "AM001", "Nam Dinh", "0943232913", "namdinh", "$2a$12$1NCjG4uHTIP358gUJzUA7u2Xvln.m/Uo.ZtOi58EK8Rud8tsD3ATa", chucVu1);
         adminRepository.save(admin);
     }
 

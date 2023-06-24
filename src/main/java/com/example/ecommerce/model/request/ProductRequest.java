@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
  * @author caodinh
  */
@@ -21,4 +23,7 @@ public class ProductRequest {
     private String category;
     private String season;
     private String description;
+    private List<String> shoeSize;
+    private List<String> clothingSize;
+    private List<String> colors;
 }

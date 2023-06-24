@@ -1,6 +1,5 @@
 package com.example.ecommerce.service;
 
-import com.example.ecommerce.model.response.ProductColorResponse;
 import com.example.ecommerce.model.response.ProductSizeResponse;
 
 import java.util.List;
@@ -11,5 +10,7 @@ import java.util.List;
 public interface ProductSizeService {
 
     List<ProductSizeResponse> getAllByCtspID(String id);
+
+    boolean save(String proId,List<String> shoeSize,List<String> clothingSize);
 
 }

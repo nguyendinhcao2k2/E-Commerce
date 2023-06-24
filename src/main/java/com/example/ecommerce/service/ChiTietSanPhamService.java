@@ -1,5 +1,6 @@
 package com.example.ecommerce.service;
 
+import com.example.ecommerce.entity.ChiTietSanPham;
 import com.example.ecommerce.model.request.ProductRequest;
 import com.example.ecommerce.model.response.SanPhamResponse;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +28,7 @@ public interface ChiTietSanPhamService {
 
     List<SanPhamResponse> getTop5();
 
-    boolean saveProduct(ProductRequest productRequest, MultipartFile file) throws IOException;
+    ChiTietSanPham saveProduct(ProductRequest productRequest, MultipartFile file) throws IOException;
 
     boolean updateProduct(String id,ProductRequest productRequest, MultipartFile file) throws IOException;
 
