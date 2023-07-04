@@ -2,7 +2,6 @@ package com.example.ecommerce.service.impl;
 
 import com.example.ecommerce.entity.GioHang;
 import com.example.ecommerce.entity.HoaDon;
-import com.example.ecommerce.entity.User;
 import com.example.ecommerce.infrastructures.constants.TypeHoaDon;
 import com.example.ecommerce.model.response.CartInfoResponse;
 import com.example.ecommerce.model.response.HoaDonResponse;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author caodinh
@@ -78,6 +78,47 @@ public class GioHangServiceImpl implements GioHangService {
     @Override
     public List<HoaDonResponse> getHoaDonByTrangThai() {
         return gioHangRepository.getHoaDonByTrangThai();
+    }
+
+    @Override
+    public boolean updateHoaDon(String id) {
+        Optional<GioHang> optionalGioHang = gioHangRepository.findById(id);
+        if (optionalGioHang.isPresent()) {
+            GioHang gioHang = optionalGioHang.get();
+            gioHang.getHoaDon().setTinhTrang(TypeHoaDon.CANCELLED.toString());
+            gioHangRepository.save(gioHang);
+
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean confirmHoaDon(String id) {
+        Optional<GioHang> optionalGioHang = gioHangRepository.findById(id);
+        if (optionalGioHang.isPresent()) {
+            GioHang gioHang = optionalGioHang.get();
+            gioHang.getHoaDon().setTinhTrang(TypeHoaDon.SUCCESS.toString());
+            gioHang.getHoaDon().setNgayNhan(new Date());
+            gioHang.getHoaDon().setNgayThanhToan(new Date());
+            gioHangRepository.save(gioHang);
+
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean switchState(String id) {
+        Optional<GioHang> optionalGioHang = gioHangRepository.findById(id);
+        if (optionalGioHang.isPresent()) {
+            GioHang gioHang = optionalGioHang.get();
+            gioHang.getHoaDon().setTinhTrang(TypeHoaDon.SHIPPING.toString());
+            gioHang.getHoaDon().setNgayShip(new Date());
+            gioHangRepository.save(gioHang);
+            return true;
+        }
+        return false;
     }
 
 

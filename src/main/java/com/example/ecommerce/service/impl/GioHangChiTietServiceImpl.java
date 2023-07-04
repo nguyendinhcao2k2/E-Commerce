@@ -1,20 +1,26 @@
 package com.example.ecommerce.service.impl;
 
+import com.example.ecommerce.model.response.GioHangChiTietResponse;
+import com.example.ecommerce.repository.GioHangChiTietRepository;
 import com.example.ecommerce.repository.GioHangRepository;
 import com.example.ecommerce.service.GioHangChiTietService;
-import com.example.ecommerce.service.GioHangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author caodinh
  */
 @Service
 public class GioHangChiTietServiceImpl implements GioHangChiTietService {
-    
+
     @Autowired
     private GioHangRepository gioHangRepository;
-    
+
+    @Autowired
+    private GioHangChiTietRepository gioHangChiTietRepository;
+
     @Override
     public String getMaxMaChiTietGioHang() {
         String maCTGH = null;
@@ -35,5 +41,10 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
         ma++;
         maCTGH = "CTGH00" + ma;
         return maCTGH;
+    }
+
+    @Override
+    public List<GioHangChiTietResponse> getAllByIdGH(String id) {
+        return gioHangChiTietRepository.getAllByIdGH(id);
     }
 }

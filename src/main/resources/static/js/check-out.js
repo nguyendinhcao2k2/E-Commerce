@@ -2,8 +2,6 @@ const viewUrl = "http://localhost:8080/api/user";
 
 function checkOut() {
     var selectedValue = $('input[name="paymentMethod"]:checked').val();
-
-    alert(selectedValue)
     let firstName = $('#firstName').val();
     let lastName = $('#lastName').val();
     let email = $('#email').val();

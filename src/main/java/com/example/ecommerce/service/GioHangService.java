@@ -17,4 +17,10 @@ public interface GioHangService {
 
     List<HoaDonResponse> getHoaDonByTrangThai();
 
+    boolean updateHoaDon(String id);
+
+    boolean confirmHoaDon(String id);
+
+    boolean switchState(String id);
+
 }

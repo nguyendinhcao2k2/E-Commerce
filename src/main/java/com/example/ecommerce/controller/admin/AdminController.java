@@ -78,4 +78,10 @@ public class AdminController {
         return "admin/hoadon";
     }
 
+    @GetMapping("/thong-ke")
+    public String thongKe(Model model) {
+
+        return "admin/thongke";
+    }
+
 }

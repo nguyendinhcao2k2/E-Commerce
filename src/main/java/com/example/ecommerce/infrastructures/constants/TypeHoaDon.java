@@ -5,7 +5,7 @@ package com.example.ecommerce.infrastructures.constants;
  */
 public enum TypeHoaDon {
 
-    DELIVERED,
+    SUCCESS,
     CANCELLED,
     SHIPPING,
     PROCESSING,

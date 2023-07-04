@@ -68,9 +68,17 @@
                     <td th:text="${hd.diaChi}"></td>
                     <td th:text="${hd.trangThai}"></td>
                     <td>
-                        <button href="details.html" class="btn btn-primary">Details</button>
-                        <button th:attr="onclick=|cancel('${hd.idGH}')|" href="details.html" class="btn btn-danger">Cancel</button>
-                        <button style="margin-top: 10px" href="details.html" class="btn btn-success">Payment Confirmation</button>
+                        <button th:attr="onclick=|detailGH('${hd.idGH}')|" class="btn btn-primary">Details</button>
+                        <button th:attr="onclick=|cancel('${hd.idGH}')|" href="details.html" class="btn btn-danger">
+                            Cancel
+                        </button>
+                        <button th:attr="onclick=|confrimPayment('${hd.idGH}')|" th:if="${hd.trangThai == 'SHIPPING'}"
+                                style="margin-top: 10px" href="details.html"
+                                class="btn btn-success">Payment Confirmation
+                        </button>
+                        <button th:attr="onclick=|shipping('${hd.idGH}')|" th:if="${hd.trangThai == 'PROCESSING'}" style="margin-top: 10px" href="details.html"
+                                class="btn btn-secondary">Switch to Shipping state
+                        </button>
                     </td>
                 </tr>
                 </tbody>
@@ -98,6 +106,102 @@
         </div>
     </div>
 </section>
+
+<!-- Start Model Delete -->
+<div class="modal fade" id="cancel" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cancel</h5>
+                <button class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có muốn cancel không ??</p>
+            </div>
+            <div class="modal-footer">
+                <button name="cancelModel" type="button" class="btn btn-danger">Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Model Delete -->
+
+<!-- Start Model Confirm -->
+<div class="modal fade" id="paymentConfirm" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Bạn Muốn Xác Nhận đơn thanh toán không</h5>
+                <button class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn Muốn Xác Nhận đơn thanh toán không</p>
+            </div>
+            <div class="modal-footer">
+                <button name="confirmModel" type="button" class="btn btn-light">Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Model Confirm -->
+
+<!-- Start Model Shipping -->
+<div class="modal fade" id="shipping" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Bạn muốn chuyển hóa đơn sang trạng thái shipping không</h5>
+                <button class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn muốn chuyển hóa đơn sang trạng thái shipping không</p>
+            </div>
+            <div class="modal-footer">
+                <button name="shippingbtn" type="button" class="btn btn-light">Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Model Shipping -->
+
+<!-- Start Model Detail -->
+<div class="modal fade" id="chiTietGH" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detail Cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <table class="table table-bordered text-center mb-0">
+                <thead class="bg-secondary text-dark">
+                <tr>
+                    <th>STT</th>
+                    <th>Tên SP</th>
+                    <th>Color</th>
+                    <th>Đơn Giá</th>
+                    <th>Size</th>
+                    <th>Amount</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody th:name="body" class="align-middle">
+                </tbody>
+            </table>
+            <div class="modal-footer">
+                <button type="button" class="btn-primary" data-dismiss="modal" aria-label="Close">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Model Delete -->
 
 <!-- Start Footer -->
 <div th:insert="~{admin/fragement/footer}"></div>

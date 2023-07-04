@@ -3,12 +3,15 @@ package com.example.ecommerce.controller.admin;
 import com.example.ecommerce.entity.ChiTietSanPham;
 import com.example.ecommerce.model.request.ProductRequest;
 import com.example.ecommerce.service.ChiTietSanPhamService;
+import com.example.ecommerce.service.GioHangChiTietService;
+import com.example.ecommerce.service.GioHangService;
 import com.example.ecommerce.service.ProductColorService;
 import com.example.ecommerce.service.ProductSizeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +39,12 @@ public class AdminRescontroller {
     @Autowired
     private ProductColorService productColorService;
 
+    @Autowired
+    private GioHangService gioHangService;
+
+    @Autowired
+    private GioHangChiTietService gioHangChiTietService;
+
     @PostMapping("/save-product")
     public ResponseEntity<String> saveProduct(@ModelAttribute ProductRequest productRequest, @RequestParam("image") MultipartFile image) throws IOException {
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.saveProduct(productRequest, image);
@@ -61,6 +70,35 @@ public class AdminRescontroller {
             return ResponseEntity.ok("Delete successfully !!");
         }
         return new ResponseEntity<>("Something went wrong", HttpStatus.BAD_REQUEST);
+    }
+
+    @DeleteMapping("/cancel/{id}")
+    public ResponseEntity<String> cancelHoaDon(@PathVariable("id") String id) {
+        if (gioHangService.updateHoaDon(id)) {
+            return ResponseEntity.ok("Cancel successfully !!");
+        }
+        return new ResponseEntity<>("Something went wrong", HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping("/confirm/{id}")
+    public ResponseEntity<String> confirmHoaDon(@PathVariable("id") String id) {
+        if (gioHangService.confirmHoaDon(id)) {
+            return ResponseEntity.ok("Confirm successfully !!");
+        }
+        return new ResponseEntity<>("Something went wrong", HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping("/shipping/{id}")
+    public ResponseEntity<String> shippingmHoaDon(@PathVariable("id") String id) {
+        if (gioHangService.switchState(id)) {
+            return ResponseEntity.ok("Switch state successfully !!");
+        }
+        return new ResponseEntity<>("Something went wrong", HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/detail-hoa-don/{id}")
+    public ResponseEntity<?> detailHoaDon(@PathVariable("id") String id) {
+        return new ResponseEntity<>(gioHangChiTietService.getAllByIdGH(id), HttpStatus.OK);
     }
 
 }

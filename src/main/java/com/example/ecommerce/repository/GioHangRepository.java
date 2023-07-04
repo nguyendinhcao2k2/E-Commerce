@@ -15,7 +15,7 @@ public interface GioHangRepository extends JpaRepository<GioHang, String> {
     @Query(value = "SELECT MAX(CAST(SUBSTRING(ma, 5) AS UNSIGNED)) FROM gio_hang", nativeQuery = true)
     String getMaxMaGioHang();
 
-    @Query("select new com.example.ecommerce.model.response.HoaDonResponse(gh.id,gh.tenNguoiNhan,gh.sdt,gh.email,gh.diaChi,gh.hoaDon.tinhTrang) from GioHang gh where gh.hoaDon.tinhTrang = 'PROCESSING'")
+    @Query("select new com.example.ecommerce.model.response.HoaDonResponse(gh.id,gh.tenNguoiNhan,gh.sdt,gh.email,gh.diaChi,gh.hoaDon.tinhTrang) from GioHang gh where gh.hoaDon.tinhTrang = 'PROCESSING' or gh.hoaDon.tinhTrang = 'SHIPPING'")
     List<HoaDonResponse> getHoaDonByTrangThai();
 
 }
