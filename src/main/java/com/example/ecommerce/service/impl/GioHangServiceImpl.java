@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -70,6 +71,7 @@ public class GioHangServiceImpl implements GioHangService {
         hoaDon.setMa(hoaDonService.getMaxMaHoaDon());
         hoaDon.setTinhTrang(TypeHoaDon.PROCESSING.toString());
         hoaDon.setNgayTao(new Date());
+        hoaDon.setTotalAmount(new BigDecimal(cartInfoResponse.getTotalPrice()));
         gioHang.setHoaDon(hoaDonRepository.save(hoaDon));
 
         gioHangRepository.save(gioHang);

@@ -8,7 +8,8 @@ function checkOut() {
     let address = $('#address').val();
     let phoneNumber = $('#phoneNumber').val();
     let note = $('#note').val();
-
+    let totalPrice = $('#totalPrice').text();
+    let price = totalPrice.replace("$", "");
 
     let errorFirstName = $('#error_first_name');
     let errorLastName = $('#error_last_name');
@@ -82,7 +83,8 @@ function checkOut() {
             email: email,
             address: address,
             phoneNumber: phoneNumber,
-            note: note
+            note: note,
+            totalPrice: price
         };
         $.ajax({
             type: "POST",

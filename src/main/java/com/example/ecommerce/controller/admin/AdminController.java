@@ -3,6 +3,7 @@ package com.example.ecommerce.controller.admin;
 import com.example.ecommerce.service.CategoryService;
 import com.example.ecommerce.service.ChiTietSanPhamService;
 import com.example.ecommerce.service.GioHangService;
+import com.example.ecommerce.service.HoaDonService;
 import com.example.ecommerce.service.MauSacService;
 import com.example.ecommerce.service.SeasonService;
 import com.example.ecommerce.service.SizeService;
@@ -39,6 +40,9 @@ public class AdminController {
 
     @Autowired
     private GioHangService gioHangService;
+
+    @Autowired
+    private HoaDonService hoaDonService;
 
     @GetMapping("/home")
     public String home(Model model) throws IOException {
@@ -80,7 +84,10 @@ public class AdminController {
 
     @GetMapping("/thong-ke")
     public String thongKe(Model model) {
-
+        model.addAttribute("totalPrice", hoaDonService.getTotalPrice().intValue());
+        model.addAttribute("totalInvoice", hoaDonService.totalInvoice());
+        model.addAttribute("totalProduct", chiTietSanPhamService.countAllProduct());
+        model.addAttribute("cancelInvoice", hoaDonService.cancelInvoice());
         return "admin/thongke";
     }
 

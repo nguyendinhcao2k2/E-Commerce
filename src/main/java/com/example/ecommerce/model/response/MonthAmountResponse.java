@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 /**
  * @author caodinh
  */
@@ -14,14 +16,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class CartInfoResponse {
+public class MonthAmountResponse {
 
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String address;
-    private String phoneNumber;
-    private String note;
-    private String totalPrice;
-
+    private int dataLabel;
+    private BigDecimal amount;
 }

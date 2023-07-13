@@ -5,6 +5,7 @@ import com.example.ecommerce.model.request.ProductRequest;
 import com.example.ecommerce.service.ChiTietSanPhamService;
 import com.example.ecommerce.service.GioHangChiTietService;
 import com.example.ecommerce.service.GioHangService;
+import com.example.ecommerce.service.HoaDonService;
 import com.example.ecommerce.service.ProductColorService;
 import com.example.ecommerce.service.ProductSizeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,9 @@ public class AdminRescontroller {
 
     @Autowired
     private GioHangChiTietService gioHangChiTietService;
+
+    @Autowired
+    private HoaDonService hoaDonService;
 
     @PostMapping("/save-product")
     public ResponseEntity<String> saveProduct(@ModelAttribute ProductRequest productRequest, @RequestParam("image") MultipartFile image) throws IOException {
@@ -101,4 +105,18 @@ public class AdminRescontroller {
         return new ResponseEntity<>(gioHangChiTietService.getAllByIdGH(id), HttpStatus.OK);
     }
 
+    @GetMapping("/amount-by-week")
+    public ResponseEntity<?> getTotalAmountByWeek(){
+        return new ResponseEntity<>(hoaDonService.getThuAndAmount(), HttpStatus.OK);
+    }
+
+    @GetMapping("/amount-by-month")
+    public ResponseEntity<?> getTotalAmountByMonth(){
+        return new ResponseEntity<>(hoaDonService.getAmountByMonth(), HttpStatus.OK);
+    }
+
+    @GetMapping("/amount-by-year")
+    public ResponseEntity<?> getTotalAmountByYear(){
+        return new ResponseEntity<>(hoaDonService.getAmountByYear(), HttpStatus.OK);
+    }
 }

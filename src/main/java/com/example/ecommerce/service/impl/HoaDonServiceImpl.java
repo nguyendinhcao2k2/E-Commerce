@@ -1,13 +1,14 @@
 package com.example.ecommerce.service.impl;
 
-import com.example.ecommerce.entity.GioHang;
-import com.example.ecommerce.entity.HoaDon;
-import com.example.ecommerce.infrastructures.constants.TypeHoaDon;
+import com.example.ecommerce.model.response.MonthAmountResponse;
+import com.example.ecommerce.model.response.ThuAmountResponse;
 import com.example.ecommerce.repository.HoaDonRepository;
-import com.example.ecommerce.service.GioHangService;
 import com.example.ecommerce.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @author caodinh
@@ -39,6 +40,36 @@ public class HoaDonServiceImpl implements HoaDonService {
         ma++;
         maHD = "HD00" + ma;
         return maHD;
+    }
+
+    @Override
+    public BigDecimal getTotalPrice() {
+        return hoaDonRepository.getTotalPrice();
+    }
+
+    @Override
+    public int totalInvoice() {
+        return hoaDonRepository.totalInvoice();
+    }
+
+    @Override
+    public int cancelInvoice() {
+        return hoaDonRepository.cancelInvoice();
+    }
+
+    @Override
+    public List<ThuAmountResponse> getThuAndAmount() {
+        return hoaDonRepository.getThuAndAmount();
+    }
+
+    @Override
+    public List<MonthAmountResponse> getAmountByMonth() {
+        return hoaDonRepository.getAmountByMonth();
+    }
+
+    @Override
+    public List<ThuAmountResponse> getAmountByYear() {
+        return hoaDonRepository.getAmountByYear();
     }
 
 
